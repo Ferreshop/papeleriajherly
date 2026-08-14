@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Papelería Jherly Bonita</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- SCRIPT OFICIAL DE PAYPAL -->
-    
-
     <style>
         :root {
             --turquesa: #64d2d7;
@@ -23,6 +22,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         
+        /* CABECERA */
         header { 
             padding: 20px 50px; 
             display: flex; 
@@ -34,6 +34,7 @@
         }
         .logo { font-size: 26px; color: var(--fucsia); font-weight: 800; display: flex; align-items: center; gap: 10px; }
         
+        /* BANNER */
         .banner { 
             width: 100%; height: 380px; 
             background: linear-gradient(135deg, var(--turquesa), #4bb3b8); 
@@ -41,6 +42,7 @@
             color: white; text-align: center; padding: 0 20px;
         }
         
+        /* FRANJA DE CONFIANZA */
         .trust-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -68,6 +70,7 @@
         
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
         
+        /* TARJETAS DE PRODUCTO */
         .card { 
             border: 2px solid var(--rosa); 
             padding: 20px; text-align: center; border-radius: 20px; 
@@ -100,10 +103,12 @@
             background: var(--fucsia); 
             color: white; border: none; padding: 12px 25px; 
             cursor: pointer; border-radius: 30px; font-weight: 600;
-            transition: 0.2s; width: 100%;
+            transition: 0.2s; width: 100%; text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center;
         }
         .btn-buy:hover { opacity: 0.9; transform: scale(1.02); }
         
+        /* SECCIONES ESTILIZADAS */
         .cart-section, .quote-section, .reviews-section, .info-section { 
             background: var(--gray); padding: 40px; margin-top: 50px; 
             border-radius: 20px; border: 1px solid var(--turquesa); 
@@ -115,10 +120,12 @@
         }
         .form-control:focus { border-color: var(--fucsia); }
 
+        /* TESTIMONIOS */
         .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .review-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .stars { color: #ffc107; margin-bottom: 10px; }
 
+        /* WHATSAPP FLOTANTE */
         .whatsapp-float {
             position: fixed; bottom: 25px; right: 25px;
             background: #25d366; color: white; width: 60px; height: 60px;
@@ -137,10 +144,12 @@
 </head>
 <body>
 
+    <!-- BOTÓN WHATSAPP -->
     <a href="https://wa.me/529640000000?text=Hola,%20vengo%20de%20su%20web%20y%20quiero%20información" class="whatsapp-float" target="_blank" title="¡Escríbenos por WhatsApp!">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
+    <!-- CABECERA -->
     <header>
         <div class="logo">
             <i class="fa-solid fa-store" style="color: var(--turquesa);"></i> JHERLY BONITA
@@ -150,11 +159,13 @@
         </nav>
     </header>
 
+    <!-- BANNER -->
     <section class="banner">
         <h1 style="font-size: 2.8rem; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">Papelería Jherly Bonita</h1>
         <p style="font-size: 1.2rem; max-width: 700px;">¡Todo para tus proyectos escolares, oficina y ferretería con calidad y el mejor estilo!</p>
     </section>
 
+    <!-- FRANJA DE CONFIANZA -->
     <div class="trust-bar">
         <div class="trust-box">
             <i class="fa-solid fa-truck-fast"></i>
@@ -173,6 +184,7 @@
         </div>
     </div>
 
+    <!-- CATÁLOGO DE PRODUCTOS -->
     <div class="container">
         <h2>Catálogo de Productos</h2>
         <div class="grid" id="product-grid">
@@ -180,7 +192,7 @@
             <!-- SKU: JHER001 -->
             <div class="card">
                 <div>
-                    <img src="https://ejemplo.com/cuaderno.jpg" alt="Cuaderno Profesional" class="product-img">
+                    <img src="https://1drv.ms/i/c/23a6d10a2b7622cd/IQBPnzlLM1x4TaZq0ud_xkwvAbV7yIv8c2APrnIiIXdSPzc?e=xxRTbt" alt="Cuaderno Profesional" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                     <span class="stock-badge"><i class="fa-solid fa-box"></i> Existencia: 50 disp.</span>
                     <h3>Cuaderno Profesional</h3>
                     <p style="font-size: 12px; color: #777; margin: 5px 0;">Cuaderno de 100 hojas a rayas</p>
@@ -192,7 +204,7 @@
             <!-- SKU: JHER002 -->
             <div class="card">
                 <div>
-                    <img src="https://ejemplo.com/geometria.jpg" alt="Juego de Geometría" class="product-img">
+                    <img src="https://1drv.ms/i/c/23a6d10a2b7622cd/IQBPnzlLM1x4TaZq0ud_xkwvAbV7yIv8c2APrnIiIXdSPzc?e=xxRTbt" alt="Juego de Geometría" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80'">
                     <span class="stock-badge"><i class="fa-solid fa-box"></i> Existencia: 20 disp.</span>
                     <h3>Juego de Geometría</h3>
                     <p style="font-size: 12px; color: #777; margin: 5px 0;">Juego completo con compás</p>
@@ -204,7 +216,7 @@
             <!-- SKU: JHER003 -->
             <div class="card">
                 <div>
-                    <img src="https://ejemplo.com/mochila.jpg" alt="Mochila Escolar" class="product-img">
+                    <img src="https://1drv.ms/i/c/23a6d10a2b7622cd/IQDobMhRhd3ASYKijoadJZpqAQX4jSftL8tIDKt2Q-fIU30?e=8SiHBQ" alt="Mochila Escolar" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80'">
                     <span class="stock-badge"><i class="fa-solid fa-box"></i> Existencia: 10 disp.</span>
                     <h3>Mochila Escolar</h3>
                     <p style="font-size: 12px; color: #777; margin: 5px 0;">Mochila reforzada resistente al agua</p>
@@ -215,6 +227,7 @@
     
         </div>
 
+        <!-- CARRITO Y PAGOS -->
         <div class="cart-section">
             <h3><i class="fa-solid fa-basket-shopping" style="color: var(--fucsia);"></i> Tu Carrito de Compras</h3>
             <ul id="cart-items" style="list-style: none; margin: 15px 0; padding-left: 0;">
@@ -224,10 +237,11 @@
             
             <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
                 <button class="btn-buy" style="background:#009ee3; width: auto;" onclick="alert('Redirigiendo a pasarela segura de Mercado Pago...')"><i class="fa-solid fa-lock"></i> Pagar con Mercado Pago</button>
-                <a href="https://www.paypal.com/ncp/payment/MB5G8V4ETRCKE" target="_blank" class="btn-buy" style="background:#00457C; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"><i class="fa-brands fa-paypal"></i> Pagar con PayPal</a>
+                <a href="https://www.paypal.com/ncp/payment/MB5G8V4ETRCKE" target="_blank" class="btn-buy" style="background:#00457C; width: auto; gap: 8px;"><i class="fa-brands fa-paypal"></i> Pagar con PayPal</a>
             </div>
         </div>
 
+        <!-- COTIZACIONES -->
         <div class="quote-section">
             <h2>¿Requieres una Cotización Especial?</h2>
             <p style="text-align: center; margin-bottom: 25px; color: #666;">Ideal para pedidos grandes, proyectos escolares o suministros de ferretería.</p>
@@ -242,6 +256,7 @@
             </form>
         </div>
 
+        <!-- RESEÑAS -->
         <div class="reviews-section">
             <h2>Lo que opinan nuestros clientes</h2>
             <div class="reviews-grid">
@@ -258,6 +273,7 @@
             </div>
         </div>
 
+        <!-- UBICACIÓN -->
         <div class="info-section" style="text-align: center;">
             <h2>Visítanos o Contáctanos</h2>
             <p style="margin-bottom: 10px; color: #555;"><i class="fa-solid fa-location-dot" style="color: var(--fucsia);"></i> Avenida Central Norte, Local Comercial</p>
@@ -265,6 +281,7 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer>
         <div class="links">
             <a href="#" onclick="alert('Nuestros envíos se realizan de 24 a 48 horas tras confirmar tu pago.')">Políticas de Envío</a>
@@ -274,6 +291,7 @@
         <p>&copy; 2026 Papelería Jherly Bonita. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- SCRIPT DEL CARRITO -->
     <script>
         let total = 0; 
         let count = 0;
@@ -294,8 +312,6 @@
             li.innerHTML = `<i class="fa-solid fa-check" style="color:var(--turquesa)"></i> ${name} - $${price.toFixed(2)}`;
             cartItemsElement.appendChild(li);
         }
-
-
     </script>
 </body>
 </html>
