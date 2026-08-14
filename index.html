@@ -3,89 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papelería Jherly Bonita - Tienda Online</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
+    <title>Papelería Jherly Bonita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        :root { --primary: #ff6584; --secondary: #6c63ff; --dark: #333; --white: #fff; }
+        :root {
+            --turquesa: #64d2d7;
+            --rosa: #ff97c1;
+            --fucsia: #e91e63;
+            --amarillo: #ffeb3b;
+            --dark: #333;
+            --white: #fff;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         
-        /* HEADER */
-        header { padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top:0; z-index: 1000; }
-        .logo { font-size: 24px; font-weight: 700; color: var(--primary); }
+        /* CABECERA */
+        header { 
+            padding: 20px 50px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--white); 
+            border-bottom: 3px solid var(--turquesa);
+            position: sticky; top: 0; z-index: 1000; 
+        }
+        .logo { font-size: 28px; color: var(--fucsia); font-weight: 800; }
         
         /* BANNER */
-        .banner { width: 100%; height: 400px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1513542789411-b8a5d4f2351b?auto=format&fit=crop&w=1920&q=80'); background-size: cover; display: flex; align-items: center; justify-content: center; color: white; text-align: center; }
+        .banner { 
+            width: 100%; height: 350px; 
+            background: var(--turquesa); 
+            display: flex; align-items: center; justify-content: center; 
+            color: white; text-align: center; padding: 0 20px;
+        }
         
-        /* CATALOGO */
         .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        h2 { color: var(--fucsia); margin-bottom: 30px; text-align: center; }
+        
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .card { border: 1px solid #ddd; padding: 20px; text-align: center; border-radius: 15px; }
-        .btn-buy { background: var(--primary); color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; margin-top: 10px; }
         
-        /* CARRITO */
-        .cart-section { background: #f4f4f4; padding: 20px; margin-top: 50px; border-radius: 10px; }
+        .card { 
+            border: 2px solid var(--rosa); 
+            padding: 20px; text-align: center; border-radius: 20px; 
+            background: var(--white);
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,151,193,0.3); }
         
-        /* PAGOS */
-        .payment-btns { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+        .btn-buy { 
+            background: var(--fucsia); 
+            color: white; border: none; padding: 12px 25px; 
+            cursor: pointer; border-radius: 30px; font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-buy:hover { opacity: 0.9; transform: scale(1.02); }
+        
+        .cart-section, .quote-section { 
+            background: #fdfdfd; padding: 30px; margin-top: 50px; 
+            border-radius: 20px; border: 1px solid var(--turquesa); 
+        }
+        
+        .form-control {
+            width: 100%; padding: 12px; border: 1px solid #ccc; 
+            border-radius: 10px; margin-bottom: 15px; outline: none;
+        }
+        .form-control:focus { border-color: var(--fucsia); }
+
+        footer { text-align: center; padding: 30px; background: var(--dark); color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
 
+    <!-- NAVEGACIÓN -->
     <header>
-        <div class="logo">Jherly Bonita</div>
-        <nav><i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span> Productos</nav>
+        <div class="logo">JHERLY BONITA</div>
+        <nav style="color: var(--fucsia); font-weight: 600;">
+            <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span> Productos
+        </nav>
     </header>
 
+    <!-- BANNER PRINCIPAL -->
     <section class="banner">
         <div>
-            <h1>Papelería Jherly Bonita</h1>
-            <p>Todo en útiles y ferretería al mejor precio.</p>
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Papelería Jherly Bonita</h1>
+            <p style="font-size: 1.1rem;">¡Todo para tus proyectos escolares, oficina y ferretería con estilo!</p>
         </div>
     </section>
 
+    <!-- CATÁLOGO DE PRODUCTOS -->
     <div class="container">
         <h2>Productos Destacados</h2>
         <div class="grid" id="product-grid">
-            <!-- Ejemplo de Producto -->
             <div class="card">
                 <h3>Cuaderno Profesional</h3>
-                <p>$45.50</p>
-                <button class="btn-buy" onclick="addToCart('Cuaderno', 45.50)">Agregar al Carrito</button>
+                <p style="margin: 15px 0; color: #666;">$45.50</p>
+                <button class="btn-buy" onclick="addToCart('Cuaderno Profesional', 45.50)">Agregar al Carrito</button>
             </div>
             <div class="card">
                 <h3>Juego de Geometría</h3>
-                <p>$35.00</p>
-                <button class="btn-buy" onclick="addToCart('Geometría', 35.00)">Agregar al Carrito</button>
+                <p style="margin: 15px 0; color: #666;">$35.00</p>
+                <button class="btn-buy" onclick="addToCart('Juego de Geometría', 35.00)">Agregar al Carrito</button>
+            </div>
+            <div class="card">
+                <h3>Cinta de Aislar / Ferretería</h3>
+                <p style="margin: 15px 0; color: #666;">$28.00</p>
+                <button class="btn-buy" onclick="addToCart('Cinta de Aislar', 28.00)">Agregar al Carrito</button>
             </div>
         </div>
 
+        <!-- CARRITO Y PAGOS -->
         <div class="cart-section">
-            <h3>Tu Carrito</h3>
-            <ul id="cart-items"></ul>
-            <p><strong>Total: $<span id="cart-total">0.00</span></strong></p>
+            <h3>Tu Carrito de Compras</h3>
+            <ul id="cart-items" style="list-style: none; margin: 15px 0; padding-left: 0;">
+                <li style="color: #888;">El carrito está vacío.</li>
+            </ul>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;"><strong>Total: $<span id="cart-total">0.00</span></strong></p>
             
-            <div class="payment-btns">
-                <button class="btn-buy" style="background:#009ee3;" onclick="alert('Redirigiendo a Mercado Pago...')">Pagar con Mercado Pago</button>
-                <button class="btn-buy" style="background:#ffc439; color:#000;" onclick="alert('Redirigiendo a PayPal...')">Pagar con PayPal</button>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn-buy" style="background:#009ee3;" onclick="alert('Redirigiendo a pasarela de Mercado Pago...')">Pagar con Mercado Pago</button>
+                <button class="btn-buy" style="background:var(--amarillo); color:var(--dark);" onclick="alert('Redirigiendo a PayPal...')">Pagar con PayPal</button>
             </div>
+        </div>
+
+        <!-- SECCIÓN DE COTIZACIONES -->
+        <div class="quote-section">
+            <h2>¿Necesitas una cotización especial?</h2>
+            <p style="text-align: center; margin-bottom: 20px; color: #666;">Ideal para pedidos grandes de papelería o materiales de ferretería.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('¡Gracias! Tu solicitud de cotización ha sido enviada con éxito.'); this.reset();" 
+                  style="max-width: 600px; margin: 0 auto;">
+                <input type="text" placeholder="Tu Nombre Completo" class="form-control" required>
+                <input type="email" placeholder="Tu Correo Electrónico" class="form-control" required>
+                <input type="tel" placeholder="Tu Teléfono / WhatsApp" class="form-control" required>
+                <textarea placeholder="Describe los productos o materiales que necesitas..." class="form-control" style="height: 100px; resize: none;" required></textarea>
+                <button type="submit" class="btn-buy" style="width: 100%;">Enviar Cotización</button>
+            </form>
         </div>
     </div>
 
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>&copy; 2026 Papelería Jherly Bonita. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT DEL CARRITO -->
     <script>
-        let total = 0;
+        let total = 0; 
         let count = 0;
+        let cartItemsElement = document.getElementById('cart-items');
+
         function addToCart(name, price) {
-            total += price;
+            if (count === 0) {
+                cartItemsElement.innerHTML = ''; // Limpiar mensaje de vacío
+            }
+            total += price; 
             count++;
+            
             document.getElementById('cart-total').innerText = total.toFixed(2);
             document.getElementById('cart-count').innerText = count;
+            
             let li = document.createElement('li');
-            li.innerText = name + " - $" + price;
-            document.getElementById('cart-items').appendChild(li);
+            li.style.margin = "8px 0";
+            li.innerHTML = `<i class="fa-solid fa-check" style="color:var(--turquesa)"></i> ${name} - $${price.toFixed(2)}`;
+            cartItemsElement.appendChild(li);
         }
     </script>
 </body>
