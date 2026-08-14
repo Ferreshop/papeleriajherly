@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- SCRIPT OFICIAL DE PAYPAL -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAGl7h_Kje7tXrxkOydChdZTie91sqUgyC-WONFK-6b-s7Mxdw55JYJxd9ucgpgFgf81Ybn1xTZ0686vY&components=hosted-buttons&disable-funding=venmo&currency=MXN"></script>
+    
 
     <style>
         :root {
@@ -224,7 +224,7 @@
             
             <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
                 <button class="btn-buy" style="background:#009ee3; width: auto;" onclick="alert('Redirigiendo a pasarela segura de Mercado Pago...')"><i class="fa-solid fa-lock"></i> Pagar con Mercado Pago</button>
-                <div id="paypal-container-MB5G8V4ETRCKE"></div>
+                <a href="https://www.paypal.com/ncp/payment/MB5G8V4ETRCKE" target="_blank" class="btn-buy" style="background:#00457C; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"><i class="fa-brands fa-paypal"></i> Pagar con PayPal</a>
             </div>
         </div>
 
@@ -295,9 +295,7 @@
             cartItemsElement.appendChild(li);
         }
 
-        paypal.HostedButtons({
-            hostedButtonId: "MB5G8V4ETRCKE",
-        }).render("#paypal-container-MB5G8V4ETRCKE");
+
     </script>
 </body>
 </html>
