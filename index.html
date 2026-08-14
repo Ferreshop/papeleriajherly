@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papelería Jherly</title>
+    <title>Papelería Jherly Bonita</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -15,9 +15,10 @@
             --amarillo: #ffeb3b;
             --dark: #333;
             --white: #fff;
+            --gray: #f9f9f9;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         
         /* CABECERA */
         header { 
@@ -29,24 +30,47 @@
             border-bottom: 3px solid var(--turquesa);
             position: sticky; top: 0; z-index: 1000; 
         }
-        .logo { font-size: 28px; color: var(--fucsia); font-weight: 800; }
+        .logo { font-size: 26px; color: var(--fucsia); font-weight: 800; display: flex; align-items: center; gap: 10px; }
         
         /* BANNER */
         .banner { 
-            width: 100%; height: 350px; 
-            background: var(--turquesa); 
-            display: flex; align-items: center; justify-content: center; 
+            width: 100%; height: 380px; 
+            background: linear-gradient(135deg, var(--turquesa), #4bb3b8); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
             color: white; text-align: center; padding: 0 20px;
         }
         
+        /* FRANJA DE CONFIANZA */
+        .trust-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: -30px auto 40px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .trust-box {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--fucsia);
+        }
+        .trust-box i { font-size: 28px; color: var(--fucsia); margin-bottom: 10px; }
+        .trust-box h4 { font-size: 16px; margin-bottom: 5px; color: var(--dark); }
+        .trust-box p { font-size: 13px; color: #666; }
+
         .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-        h2 { color: var(--fucsia); margin-bottom: 30px; text-align: center; }
+        h2 { color: var(--fucsia); margin-bottom: 30px; text-align: center; font-size: 2rem; }
         
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
         
         .card { 
             border: 2px solid var(--rosa); 
-            padding: 20px; text-align: center; border-radius: 20px; 
+            padding: 25px; text-align: center; border-radius: 20px; 
             background: var(--white);
             transition: 0.3s;
         }
@@ -60,91 +84,164 @@
         }
         .btn-buy:hover { opacity: 0.9; transform: scale(1.02); }
         
-        .cart-section, .quote-section { 
-            background: #fdfdfd; padding: 30px; margin-top: 50px; 
+        /* SECCIONES ESTILIZADAS */
+        .cart-section, .quote-section, .reviews-section, .info-section { 
+            background: var(--gray); padding: 40px; margin-top: 50px; 
             border-radius: 20px; border: 1px solid var(--turquesa); 
         }
         
         .form-control {
             width: 100%; padding: 12px; border: 1px solid #ccc; 
-            border-radius: 10px; margin-bottom: 15px; outline: none;
+            border-radius: 10px; margin-bottom: 15px; outline: none; background: white;
         }
         .form-control:focus { border-color: var(--fucsia); }
 
-        footer { text-align: center; padding: 30px; background: var(--dark); color: white; margin-top: 50px; }
+        /* TESTIMONIOS */
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .review-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .stars { color: #ffc107; margin-bottom: 10px; }
+
+        /* WHATSAPP FLOTANTE */
+        .whatsapp-float {
+            position: fixed; bottom: 25px; right: 25px;
+            background: #25d366; color: white; width: 60px; height: 60px;
+            border-radius: 50px; text-align: center; font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 100;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); background: #20ba5a; }
+
+        footer { text-align: center; padding: 40px 20px; background: var(--dark); color: white; margin-top: 50px; }
+        footer .links { margin-bottom: 15px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        footer a { color: var(--turquesa); text-decoration: none; font-size: 14px; }
+        footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="https://wa.me/529640000000?text=Hola,%20vengo%20de%20su%20web%20y%20quiero%20información" class="whatsapp-float" target="_blank" title="¡Escríbenos por WhatsApp!">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <!-- NAVEGACIÓN -->
     <header>
-        <div class="logo">JHERLY BONITA</div>
-        <nav style="color: var(--fucsia); font-weight: 600;">
+        <div class="logo">
+            <i class="fa-solid fa-store" style="color: var(--turquesa);"></i> JHERLY BONITA
+        </div>
+        <nav style="color: var(--fucsia); font-weight: 600; display: flex; align-items: center; gap: 8px;">
             <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span> Productos
         </nav>
     </header>
 
     <!-- BANNER PRINCIPAL -->
     <section class="banner">
-        <div>
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Papelería Jherly Bonita</h1>
-            <p style="font-size: 1.1rem;">¡Todo para tus proyectos escolares, oficina y ferretería con estilo!</p>
-        </div>
+        <h1 style="font-size: 2.8rem; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">Papelería Jherly Bonita</h1>
+        <p style="font-size: 1.2rem; max-width: 700px;">¡Todo para tus proyectos escolares, oficina y ferretería con calidad y el mejor estilo!</p>
     </section>
+
+    <!-- FRANJA DE CONFIANZA Y BENEFICIOS -->
+    <div class="trust-bar">
+        <div class="trust-box">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h4>Envíos Locales</h4>
+            <p>Rápidos y seguros en toda la zona</p>
+        </div>
+        <div class="trust-box">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h4>Pagos Protegidos</h4>
+            <p>Transacciones 100% confiables</p>
+        </div>
+        <div class="trust-box">
+            <i class="fa-solid fa-face-smile"></i>
+            <h4>Atención Cálida</h4>
+            <p>Te ayudamos con lo que necesites</p>
+        </div>
+    </div>
 
     <!-- CATÁLOGO DE PRODUCTOS -->
     <div class="container">
-        <h2>Productos Destacados</h2>
+        <h2>Catálogo Destacado</h2>
         <div class="grid" id="product-grid">
             <div class="card">
                 <h3>Cuaderno Profesional</h3>
-                <p style="margin: 15px 0; color: #666;">$45.50</p>
+                <p style="margin: 15px 0; color: #666; font-size: 1.1rem; font-weight: 600;">$45.50</p>
                 <button class="btn-buy" onclick="addToCart('Cuaderno Profesional', 45.50)">Agregar al Carrito</button>
             </div>
             <div class="card">
                 <h3>Juego de Geometría</h3>
-                <p style="margin: 15px 0; color: #666;">$35.00</p>
+                <p style="margin: 15px 0; color: #666; font-size: 1.1rem; font-weight: 600;">$35.00</p>
                 <button class="btn-buy" onclick="addToCart('Juego de Geometría', 35.00)">Agregar al Carrito</button>
             </div>
             <div class="card">
                 <h3>Cinta de Aislar / Ferretería</h3>
-                <p style="margin: 15px 0; color: #666;">$28.00</p>
+                <p style="margin: 15px 0; color: #666; font-size: 1.1rem; font-weight: 600;">$28.00</p>
                 <button class="btn-buy" onclick="addToCart('Cinta de Aislar', 28.00)">Agregar al Carrito</button>
             </div>
         </div>
 
         <!-- CARRITO Y PAGOS -->
         <div class="cart-section">
-            <h3>Tu Carrito de Compras</h3>
+            <h3><i class="fa-solid fa-basket-shopping" style="color: var(--fucsia);"></i> Tu Carrito de Compras</h3>
             <ul id="cart-items" style="list-style: none; margin: 15px 0; padding-left: 0;">
                 <li style="color: #888;">El carrito está vacío.</li>
             </ul>
-            <p style="font-size: 1.2rem; margin-bottom: 20px;"><strong>Total: $<span id="cart-total">0.00</span></strong></p>
+            <p style="font-size: 1.3rem; margin-bottom: 20px;"><strong>Total: $<span id="cart-total">0.00</span></strong></p>
             
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="btn-buy" style="background:#009ee3;" onclick="alert('Redirigiendo a pasarela de Mercado Pago...')">Pagar con Mercado Pago</button>
-                <button class="btn-buy" style="background:var(--amarillo); color:var(--dark);" onclick="alert('Redirigiendo a PayPal...')">Pagar con PayPal</button>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn-buy" style="background:#009ee3;" onclick="alert('Redirigiendo a pasarela segura de Mercado Pago...')"><i class="fa-solid fa-lock"></i> Pagar con Mercado Pago</button>
+                <button class="btn-buy" style="background:var(--amarillo); color:var(--dark);" onclick="alert('Redirigiendo a PayPal...')"><i class="fa-brands fa-paypal"></i> Pagar con PayPal</button>
             </div>
         </div>
 
-        <!-- SECCIÓN DE COTIZACIONES -->
+        <!-- SECCIÓN DE COTIZACIONES (FERRETERÍA Y PAPELERÍA) -->
         <div class="quote-section">
-            <h2>¿Necesitas una cotización especial?</h2>
-            <p style="text-align: center; margin-bottom: 20px; color: #666;">Ideal para pedidos grandes de papelería o materiales de ferretería.</p>
+            <h2>¿Requieres una Cotización Especial?</h2>
+            <p style="text-align: center; margin-bottom: 25px; color: #666;">Ideal para pedidos grandes, proyectos escolares o suministros de ferretería.</p>
             
-            <form onsubmit="event.preventDefault(); alert('¡Gracias! Tu solicitud de cotización ha sido enviada con éxito.'); this.reset();" 
+            <form onsubmit="event.preventDefault(); alert('¡Gracias! Tu solicitud ha sido enviada correctamente. Nos pondremos en contacto contigo pronto.'); this.reset();" 
                   style="max-width: 600px; margin: 0 auto;">
                 <input type="text" placeholder="Tu Nombre Completo" class="form-control" required>
                 <input type="email" placeholder="Tu Correo Electrónico" class="form-control" required>
                 <input type="tel" placeholder="Tu Teléfono / WhatsApp" class="form-control" required>
-                <textarea placeholder="Describe los productos o materiales que necesitas..." class="form-control" style="height: 100px; resize: none;" required></textarea>
-                <button type="submit" class="btn-buy" style="width: 100%;">Enviar Cotización</button>
+                <textarea placeholder="Describe los materiales, marcas o cantidades que necesitas..." class="form-control" style="height: 110px; resize: none;" required></textarea>
+                <button type="submit" class="btn-buy" style="width: 100%;">Enviar Solicitud de Cotización</button>
             </form>
+        </div>
+
+        <!-- SECCIÓN DE RESEÑAS (PRUEBA SOCIAL) -->
+        <div class="reviews-section">
+            <h2>Lo que opinan nuestros clientes</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p style="font-size: 14px; color: #555; margin-bottom: 10px;">"Excelente servicio y tienen surtido tanto de papelería como de herramientas. Pedí cotización y me respondieron rapidísimo."</p>
+                    <strong style="font-size: 13px; color: var(--fucsia);">- Mariana G.</strong>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p style="font-size: 14px; color: #555; margin-bottom: 10px;">"Muy confiables. Hice mi pedido para el material escolar de mis hijos y llegó todo en orden y muy bonito."</p>
+                    <strong style="font-size: 13px; color: var(--fucsia);">- Carlos R.</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- UBICACIÓN Y HORARIOS -->
+        <div class="info-section" style="text-align: center;">
+            <h2>Visítanos o Contáctanos</h2>
+            <p style="margin-bottom: 10px; color: #555;"><i class="fa-solid fa-location-dot" style="color: var(--fucsia);"></i> Avenida Central Norte, Local Comercial</p>
+            <p style="margin-bottom: 20px; color: #555;"><i class="fa-solid fa-clock" style="color: var(--fucsia);"></i> Horarios: Lunes a Sábado de 8:00 AM a 7:00 PM</p>
         </div>
     </div>
 
-    <!-- PIE DE PÁGINA -->
+    <!-- PIE DE PÁGINA CON POLÍTICAS -->
     <footer>
+        <div class="links">
+            <a href="#" onclick="alert('Nuestros envíos se realizan de 24 a 48 horas tras confirmar tu pago.')">Políticas de Envío</a>
+            <a href="#" onclick="alert('Garantía de cambio en productos defectuosos dentro de los primeros 7 días.')">Políticas de Devolución</a>
+            <a href="#" onclick="alert('Tus datos están seguros y protegidos conforme a la ley de privacidad.')">Aviso de Privacidad</a>
+        </div>
         <p>&copy; 2026 Papelería Jherly Bonita. Todos los derechos reservados.</p>
     </footer>
 
@@ -156,7 +253,7 @@
 
         function addToCart(name, price) {
             if (count === 0) {
-                cartItemsElement.innerHTML = ''; // Limpiar mensaje de vacío
+                cartItemsElement.innerHTML = ''; 
             }
             total += price; 
             count++;
