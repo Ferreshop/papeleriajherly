@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- SCRIPT OFICIAL DE PAYPAL -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAGl7h_Kje7tXrxkOydChdZTie91sqUgyC-WONFK-6b-s7Mxdw55JYJxd9ucgpgFgf81Ybn1xTZ0686vY&components=hosted-buttons&disable-funding=venmo&currency=MXN"></script>
+
     <style>
         :root {
             --turquesa: #64d2d7;
@@ -189,9 +192,11 @@
             </ul>
             <p style="font-size: 1.3rem; margin-bottom: 20px;"><strong>Total: $<span id="cart-total">0.00</span></strong></p>
             
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
                 <button class="btn-buy" style="background:#009ee3;" onclick="alert('Redirigiendo a pasarela segura de Mercado Pago...')"><i class="fa-solid fa-lock"></i> Pagar con Mercado Pago</button>
-                <button class="btn-buy" style="background:var(--amarillo); color:var(--dark);" onclick="alert('Redirigiendo a PayPal...')"><i class="fa-brands fa-paypal"></i> Pagar con PayPal</button>
+                
+                <!-- BOTÓN OFICIAL DE PAYPAL INTEGRADO -->
+                <div id="paypal-container-MB5G8V4ETRCKE"></div>
             </div>
         </div>
 
@@ -245,7 +250,7 @@
         <p>&copy; 2026 Papelería Jherly Bonita. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- SCRIPT DEL CARRITO -->
+    <!-- SCRIPT DEL CARRITO Y RENDERIZADO DE PAYPAL -->
     <script>
         let total = 0; 
         let count = 0;
@@ -266,6 +271,11 @@
             li.innerHTML = `<i class="fa-solid fa-check" style="color:var(--turquesa)"></i> ${name} - $${price.toFixed(2)}`;
             cartItemsElement.appendChild(li);
         }
+
+        /* RENDERIZAR EL BOTÓN DE PAYPAL OFICIAL */
+        paypal.HostedButtons({
+            hostedButtonId: "MB5G8V4ETRCKE",
+        }).render("#paypal-container-MB5G8V4ETRCKE");
     </script>
 </body>
 </html>
