@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papelería Jherly - Tienda Online</title>
+    <title>Papelería Jherly - Tienda Online Premium</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap" rel="stylesheet">
     <!-- FontAwesome para Iconos -->
@@ -24,208 +24,120 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         
-        body { background-color: var(--fondo-gris); color: var(--texto-oscuro); }
+        body { background-color: var(--fondo-gris); color: var(--texto-oscuro); overflow-x: hidden; }
 
         /* CABECERA */
         header { 
-            padding: 20px 50px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--blanco); 
-            border-bottom: 3px solid var(--primario);
-            position: sticky; top: 0; z-index: 1000; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; 
+            background: var(--blanco); border-bottom: 3px solid var(--primario);
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
         .logo { font-size: 24px; color: var(--primario); font-weight: 800; display: flex; align-items: center; gap: 12px; }
         .logo img { height: 50px; border-radius: 8px; object-fit: contain; }
-        
         nav { color: var(--primario); font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; padding: 5px 15px; border-radius: 20px;}
         nav:hover { background: #e0e7ff; }
-        nav i { font-size: 1.4rem; }
 
-        /* BANNER */
-        .banner { 
-            width: 100%; height: 380px; 
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.85), rgba(14, 165, 233, 0.8)), url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+        /* SLIDER CARRUSEL */
+        .hero-slider {
+            position: relative; width: 100%; height: 400px; overflow: hidden;
+        }
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: white; text-align: center; padding: 0 20px;
+            opacity: 0; transition: opacity 1s ease-in-out; background-size: cover; background-position: center;
         }
-        .banner h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: 800;}
-        .banner p { font-size: 1.2rem; max-width: 700px; font-weight: 400; opacity: 0.95;}
+        .slide.active { opacity: 1; z-index: 1; }
+        .slide h1 { font-size: 3.5rem; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-weight: 800; transform: translateY(20px); opacity: 0; transition: 0.8s 0.3s ease-out; }
+        .slide p { font-size: 1.3rem; max-width: 700px; font-weight: 500; text-shadow: 0 2px 5px rgba(0,0,0,0.3); transform: translateY(20px); opacity: 0; transition: 0.8s 0.5s ease-out; }
+        .slide.active h1, .slide.active p { transform: translateY(0); opacity: 1; }
         
+        .slider-dots {
+            position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 10px; z-index: 2;
+        }
+        .dot { width: 12px; height: 12px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .dot.active { background: white; transform: scale(1.3); }
+
         /* FRANJA DE CONFIANZA */
-        .trust-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: -30px auto 40px auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-        .trust-box {
-            background: var(--blanco);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--secundario);
-            transition: 0.3s;
-        }
-        .trust-box:hover { transform: translateY(-5px); }
-        .trust-box i { font-size: 28px; color: var(--secundario); margin-bottom: 10px; }
+        .trust-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: -40px auto 40px auto; padding: 0 20px; position: relative; z-index: 10; }
+        .trust-box { background: var(--blanco); padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-top: 4px solid var(--secundario); transition: 0.3s; }
+        .trust-box:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+        .trust-box i { font-size: 30px; color: var(--secundario); margin-bottom: 10px; }
         .trust-box h4 { font-size: 16px; margin-bottom: 5px; color: var(--texto-oscuro); }
-        .trust-box p { font-size: 13px; color: var(--texto-claro); }
 
         /* BUSCADOR CLÁSICO CENTRADO */
-        .search-container {
-            max-width: 800px; margin: 40px auto; padding: 0 20px;
-        }
-        .search-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .search-wrapper i {
-            position: absolute;
-            left: 20px;
-            color: var(--primario);
-            font-size: 1.2rem;
-        }
-        .search-wrapper input {
-            width: 100%;
-            padding: 15px 20px 15px 50px;
-            border: 2px solid var(--borde-card);
-            border-radius: 50px;
-            font-size: 1.1rem;
-            outline: none;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-            color: var(--texto-oscuro);
-        }
-        .search-wrapper input:focus {
-            border-color: var(--primario);
-            box-shadow: 0 5px 20px rgba(79, 70, 229, 0.15);
-        }
+        .search-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-wrapper i { position: absolute; left: 20px; color: var(--primario); font-size: 1.2rem; }
+        .search-wrapper input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--borde-card); border-radius: 50px; font-size: 1.1rem; outline: none; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.02); color: var(--texto-oscuro); }
+        .search-wrapper input:focus { border-color: var(--primario); box-shadow: 0 5px 20px rgba(79, 70, 229, 0.15); }
 
         /* SECCIÓN DE MARCAS */
         .brands-section { max-width: 1200px; margin: 20px auto 40px auto; padding: 0 20px; text-align: center; }
         .brands-section h2 { color: var(--texto-oscuro); margin-bottom: 20px; font-size: 1.8rem; font-weight: 800; }
-        .brands-section h2 span { color: var(--primario); }
         .brands-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-        .brand-item { 
-            background: var(--blanco); padding: 10px 20px; border-radius: 30px; font-weight: 600; 
-            color: var(--texto-claro); border: 2px solid var(--borde-card); cursor: pointer; transition: 0.3s; 
-        }
-        .brand-item:hover, .brand-item.active { 
-            background: var(--primario); color: var(--blanco); border-color: var(--primario); 
-            transform: translateY(-3px); box-shadow: 0 5px 10px rgba(79, 70, 229, 0.2); 
-        }
+        .brand-item { background: var(--blanco); padding: 10px 20px; border-radius: 30px; font-weight: 600; color: var(--texto-claro); border: 2px solid var(--borde-card); cursor: pointer; transition: 0.3s; }
+        .brand-item:hover, .brand-item.active { background: var(--primario); color: var(--blanco); border-color: var(--primario); transform: translateY(-3px); box-shadow: 0 5px 10px rgba(79, 70, 229, 0.2); }
 
         .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-        .section-header { color: var(--texto-oscuro); margin-bottom: 30px; text-align: center; font-size: 2.2rem; font-weight: 800;}
-        .section-header span { color: var(--primario); }
-        
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
         
-        /* TARJETAS DE PRODUCTO CON VISTA RÁPIDA */
-        .card { 
-            border: 1px solid var(--borde-card); 
-            padding: 20px; text-align: center; border-radius: 20px; 
-            background: var(--blanco);
-            transition: 0.3s;
-            display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
+        /* TARJETAS DE PRODUCTO */
+        .card { border: 1px solid var(--borde-card); padding: 20px; text-align: center; border-radius: 20px; background: var(--blanco); transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.1); border-color: var(--primario); }
         
         .img-wrapper { position: relative; overflow: hidden; border-radius: 10px; margin-bottom: 15px; cursor: pointer; background: #fff;}
         .product-img { width: 100%; height: 160px; object-fit: contain; transition: 0.3s; }
         .img-wrapper:hover .product-img { transform: scale(1.05); }
 
-        .stock-badge {
-            position: absolute; top: 10px; right: 10px;
-            background: #e0f2fe;
-            color: #0284c7;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
+        /* BADGES PROMOCIONALES Y STOCK */
+        .stock-badge { position: absolute; bottom: 10px; right: 10px; background: #e0f2fe; color: #0284c7; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; z-index: 3;}
+        .promo-badge { position: absolute; top: 15px; left: -30px; transform: rotate(-45deg); padding: 5px 35px; color: white; font-size: 10px; font-weight: 800; letter-spacing: 1px; z-index: 3; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .badge-nuevo { background: var(--secundario); }
+        .badge-vendido { background: var(--amarillo); color: var(--texto-oscuro); }
 
-        .quick-view-btn { 
-            position: absolute; bottom: -40px; left: 0; width: 100%; 
-            background: rgba(79, 70, 229, 0.9); color: white; padding: 8px; 
-            font-size: 0.9rem; font-weight: 600; transition: 0.3s; 
-        }
-        .img-wrapper:hover .quick-view-btn { bottom: 0; }
+        .quick-view-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); color: white; padding: 10px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; transition: 0.3s; opacity: 0; z-index: 4; }
+        .img-wrapper:hover .quick-view-btn { opacity: 1; }
         
         .product-title { font-size: 1.05rem; color: var(--texto-oscuro); margin-bottom: 10px; line-height: 1.3; font-weight: 600; }
         .price-text { margin: 15px 0; color: var(--texto-oscuro); font-size: 1.6rem; font-weight: 800; }
         
-        .btn-buy { 
-            background: var(--primario); 
-            color: white; border: none; padding: 12px 25px; 
-            cursor: pointer; border-radius: 30px; font-weight: 600;
-            transition: 0.2s; width: 100%; font-size: 1rem;
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        .btn-buy { background: var(--primario); color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 30px; font-weight: 600; transition: 0.2s; width: 100%; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-buy:hover { background: var(--primario-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3); }
 
-        /* MODAL VISTA RÁPIDA */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(4px); padding: 20px; }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background: var(--blanco); width: 800px; max-width: 100%; border-radius: 20px; overflow: hidden; display: flex; flex-wrap: wrap; position: relative; transform: scale(0.9); transition: 0.3s; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; color: var(--texto-oscuro); transition: 0.2s; z-index: 10; }
-        .modal-close:hover { background: var(--primario); color: white; transform: rotate(90deg); }
-        .modal-left { flex: 1; min-width: 300px; background: #fff; padding: 40px; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--borde-card); }
-        .modal-left img { max-width: 100%; max-height: 350px; object-fit: contain; }
-        .modal-right { flex: 1; min-width: 300px; padding: 40px; display: flex; flex-direction: column; justify-content: center; background: var(--fondo-gris); }
-        .modal-dept { color: var(--texto-claro); font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
-        .modal-title { font-size: 1.8rem; font-weight: 800; color: var(--texto-oscuro); margin-bottom: 20px; line-height: 1.2; }
-        .modal-price { font-size: 2.5rem; color: var(--primario); font-weight: 800; margin-bottom: 30px; }
-        
-        /* SECCIONES ESTILIZADAS */
-        .cart-section, .quote-section, .reviews-section, .info-section { 
-            background: var(--blanco); padding: 40px; margin-top: 50px; 
-            border-radius: 20px; border: 1px solid var(--borde-card); 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
-            border-top: 4px solid var(--secundario);
-        }
-        
-        .form-control {
-            width: 100%; padding: 14px; border: 1px solid var(--borde-card); 
-            border-radius: 10px; margin-bottom: 15px; outline: none; background: var(--fondo-gris);
-            color: var(--texto-oscuro); font-size: 1rem; transition: 0.3s;
-        }
-        .form-control:focus { border-color: var(--primario); background: var(--blanco); }
+        /* EFECTOS DE ANIMACIÓN SCROLL (FADE-IN) */
+        .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* TESTIMONIOS */
+        /* CARRUSEL INFINITO DE MARCAS */
+        .marquee-container { background: white; padding: 40px 0; margin-top: 50px; overflow: hidden; border-top: 1px solid var(--borde-card); border-bottom: 1px solid var(--borde-card); }
+        .marquee-container h2 { text-align: center; color: var(--texto-claro); font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
+        .marquee { display: flex; width: max-content; animation: scroll 20s linear infinite; }
+        .marquee:hover { animation-play-state: paused; }
+        .brand-logo { font-size: 2rem; font-weight: 800; color: #cbd5e1; margin: 0 40px; text-transform: uppercase; transition: 0.3s; cursor: pointer; }
+        .brand-logo:hover { color: var(--primario); }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* SECCIONES ESTILIZADAS */
+        .cart-section, .quote-section, .reviews-section { background: var(--blanco); padding: 50px; margin-top: 50px; border-radius: 20px; border: 1px solid var(--borde-card); box-shadow: 0 5px 20px rgba(0,0,0,0.02); border-top: 4px solid var(--secundario); }
+        .form-control { width: 100%; padding: 15px; border: 1px solid var(--borde-card); border-radius: 10px; margin-bottom: 15px; outline: none; background: var(--fondo-gris); color: var(--texto-oscuro); font-size: 1rem; transition: 0.3s; }
+        .form-control:focus { border-color: var(--primario); background: var(--blanco); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+
         .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .review-card { background: var(--fondo-gris); padding: 25px; border-radius: 15px; border-left: 4px solid var(--primario); }
-        .stars { color: var(--amarillo); margin-bottom: 10px; font-size: 1.1rem; }
-        .review-card p { font-size: 14px; color: var(--texto-claro); margin-bottom: 10px; font-style: italic; }
+        .stars { color: var(--amarillo); margin-bottom: 10px; }
 
-        /* WHATSAPP FLOTANTE */
-        .whatsapp-float {
-            position: fixed; bottom: 25px; right: 25px;
-            background: #25d366; color: white; width: 60px; height: 60px;
-            border-radius: 50px; text-align: center; font-size: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 100;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.3s;
-        }
+        /* BOTONES FLOTANTES */
+        .whatsapp-float { position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 100; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1) rotate(-10deg); background: #20ba5a; }
-
-        footer { text-align: center; padding: 40px 20px; background: #0f172a; color: white; margin-top: 50px; }
-        footer .links { margin-bottom: 15px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        footer a { color: var(--secundario); text-decoration: none; font-size: 14px; }
-        footer a:hover { color: var(--blanco); }
         
-        /* ITEMS DEL CARRITO */
+        .back-to-top { position: fixed; bottom: 100px; right: 30px; background: var(--texto-oscuro); color: white; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; opacity: 0; visibility: hidden; z-index: 99; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--primario); transform: translateY(-3px); }
+
+        footer { text-align: center; padding: 40px 20px; background: #0f172a; color: white; }
+        footer a { color: var(--secundario); text-decoration: none; font-size: 14px; }
+        
         .cart-item-row { background: var(--fondo-gris); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; border: 1px solid var(--borde-card); }
         .cart-item-row button { background: #fee2e2; color: #e11d48; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 600; display: flex; align-items: center; gap: 5px; }
         .cart-item-row button:hover { background: #e11d48; color: white; }
@@ -234,13 +146,23 @@
         #toast-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: #10b981; color: white; padding: 15px 25px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3); transform: translateX(-150%); opacity: 0; transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .toast.show { transform: translateX(0); opacity: 1; }
-        .toast i { font-size: 1.4rem; }
+        
+        /* MODAL VISTA RÁPIDA */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(4px); padding: 20px; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--blanco); width: 800px; max-width: 100%; border-radius: 20px; overflow: hidden; display: flex; flex-wrap: wrap; position: relative; transform: scale(0.9); transition: 0.3s; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; color: var(--texto-oscuro); transition: 0.2s; z-index: 10; }
+        .modal-close:hover { background: var(--primario); color: white; }
+        .modal-left { flex: 1; min-width: 300px; background: #fff; padding: 40px; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--borde-card); }
+        .modal-left img { max-width: 100%; max-height: 350px; object-fit: contain; }
+        .modal-right { flex: 1; min-width: 300px; padding: 40px; display: flex; flex-direction: column; justify-content: center; background: var(--fondo-gris); }
     </style>
 </head>
 <body>
 
-    <!-- TOAST CONTAINER -->
     <div id="toast-container"></div>
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Volver Arriba"><i class="fa-solid fa-chevron-up"></i></button>
 
     <!-- MODAL VISTA RÁPIDA -->
     <div class="modal-overlay" id="quickViewModal" onclick="closeQuickView(event)">
@@ -250,9 +172,9 @@
                 <img id="qv-img" src="" alt="Producto">
             </div>
             <div class="modal-right">
-                <span class="modal-dept" id="qv-dept">DEPARTAMENTO</span>
-                <h2 class="modal-title" id="qv-title">Nombre del Producto</h2>
-                <div class="modal-price" id="qv-price">$0.00</div>
+                <span class="modal-dept" id="qv-dept" style="color:var(--texto-claro); font-weight:800; font-size:0.9rem; text-transform:uppercase;">DEPARTAMENTO</span>
+                <h2 class="modal-title" id="qv-title" style="font-size:1.8rem; font-weight:800; color:var(--texto-oscuro); margin:10px 0;">Nombre del Producto</h2>
+                <div class="modal-price" id="qv-price" style="font-size:2.5rem; color:var(--primario); font-weight:800; margin-bottom:20px;">$0.00</div>
                 <button class="btn-buy" id="qv-add-btn" style="padding: 18px; font-size: 1.2rem;">
                     <i class="fa-solid fa-cart-plus"></i> Agregar al Carrito
                 </button>
@@ -261,11 +183,11 @@
     </div>
 
     <!-- BOTÓN WHATSAPP -->
-    <a href="https://wa.me/529641091387?text=Hola,%20vengo%20de%20su%20web%20y%20quiero%20información" class="whatsapp-float" target="_blank" title="¡Escríbenos por WhatsApp!">
+    <a href="https://wa.me/529641091387?text=Hola,%20vengo%20de%20su%20web%20y%20quiero%20hacer%20un%20pedido" class="whatsapp-float" target="_blank" title="¡Escríbenos por WhatsApp!">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- CABECERA CON TU NUEVO LOGO -->
+    <!-- CABECERA -->
     <header>
         <div class="logo">
             <img src="https://i.imgur.com/EAXsBcT.png" alt="Logo Papelería Jherly">
@@ -276,14 +198,30 @@
         </nav>
     </header>
 
-    <!-- BANNER -->
-    <section class="banner">
-        <h1>Papelería y Ferretería</h1>
-        <p>¡Todo para tus proyectos escolares, oficina y ferretería con calidad y el mejor estilo!</p>
+    <!-- CARRUSEL HERO -->
+    <section class="hero-slider">
+        <div class="slide active" style="background-image: linear-gradient(135deg, rgba(79, 70, 229, 0.8), rgba(14, 165, 233, 0.8)), url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80');">
+            <h1>Papelería y Ferretería</h1>
+            <p>¡Todo para tus proyectos escolares, oficina y ferretería con calidad y el mejor estilo!</p>
+        </div>
+        <div class="slide" style="background-image: linear-gradient(135deg, rgba(225, 29, 72, 0.8), rgba(79, 70, 229, 0.8)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80');">
+            <h1>¡Especial Regreso a Clases!</h1>
+            <p>Equípate con las mejores libretas, colores y útiles escolares al mejor precio.</p>
+        </div>
+        <div class="slide" style="background-image: linear-gradient(135deg, rgba(14, 165, 233, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1200&q=80');">
+            <h1>Herramientas Truper & Volteck</h1>
+            <p>Material resistente para cualquier trabajo, iluminación y reparaciones en el hogar.</p>
+        </div>
+        
+        <div class="slider-dots">
+            <span class="dot active" onclick="changeSlide(0)"></span>
+            <span class="dot" onclick="changeSlide(1)"></span>
+            <span class="dot" onclick="changeSlide(2)"></span>
+        </div>
     </section>
 
     <!-- FRANJA DE CONFIANZA -->
-    <div class="trust-bar">
+    <div class="trust-bar fade-in">
         <div class="trust-box">
             <i class="fa-solid fa-truck-fast"></i>
             <h4>Envíos Locales</h4>
@@ -301,16 +239,16 @@
         </div>
     </div>
 
-    <!-- BUSCADOR (SIN ORDENAMIENTO) -->
-    <div class="search-container">
+    <!-- BUSCADOR -->
+    <div class="search-container fade-in">
         <div class="search-wrapper">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="Buscador en Tiempo Real... Escribe cúter, foamy, etc." onkeyup="applyFilters()">
+            <input type="text" id="searchInput" placeholder="Buscador inteligente... Escribe cúter, foamy, etc." onkeyup="applyFilters()">
         </div>
     </div>
 
     <!-- SECCIÓN DE MARCAS -->
-    <div class="brands-section">
+    <div class="brands-section fade-in">
         <h2>Filtra por <span>Marcas</span></h2>
         <div class="brands-grid">
             <button class="brand-item active" onclick="filterByBrand('ALL', this)">Mostrar Todas</button>
@@ -329,7 +267,7 @@
 
     <!-- CATÁLOGO DE PRODUCTOS -->
     <div class="container" id="catalog-section">
-        <h2 class="section-header">Catálogo <span id="catalog-title">General</span></h2>
+        <h2 class="section-header fade-in">Catálogo <span id="catalog-title">General</span></h2>
         
         <div id="no-results" style="display: none; text-align: center; padding: 40px; color: #94a3b8; font-size: 1.2rem;">
             <i class="fa-solid fa-face-frown" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px; display: block;"></i>
@@ -338,9 +276,10 @@
         
         <div class="grid" id="product-grid">
 
-            <div class="card" data-brand="cámara wifi robotizada tipo domo 3mp, volteck" data-name="cámara wifi robotizada tipo domo 3mp, volteck">
+            <div class="card fade-in" data-brand="cámara wifi robotizada tipo domo 3mp, volteck" data-name="cámara wifi robotizada tipo domo 3mp, volteck">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK', 845.0, 'FERRETERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -351,9 +290,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK', 845.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="sensor de movimiento con alarma y timbre volteck" data-name="sensor de movimiento con alarma y timbre volteck">
+            <div class="card fade-in" data-brand="sensor de movimiento con alarma y timbre volteck" data-name="sensor de movimiento con alarma y timbre volteck">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK', 219.0, 'FERRETERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -364,9 +304,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK', 219.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="curp" data-name="curp">
+            <div class="card fade-in" data-brand="curp" data-name="curp">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Curp', 10.0, 'FERRETERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Curp" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 19 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -377,9 +318,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Curp', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000" data-name="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000">
+            <div class="card fade-in" data-brand="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000" data-name="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000', 430.0, 'TECNOLOGIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -390,9 +332,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000', 430.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lector de código de barras tiaoma alámbrico" data-name="lector de código de barras tiaoma alámbrico">
+            <div class="card fade-in" data-brand="lector de código de barras tiaoma alámbrico" data-name="lector de código de barras tiaoma alámbrico">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lector de Código de Barras Tiaoma Alámbrico', 430.0, 'TECNOLOGIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Lector de Código de Barras Tiaoma Alámbrico" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -403,9 +346,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Lector de Código de Barras Tiaoma Alámbrico', 430.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="impresora termica de tickets 58mm" data-name="impresora termica de tickets 58mm">
+            <div class="card fade-in" data-brand="impresora termica de tickets 58mm" data-name="impresora termica de tickets 58mm">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'impresora termica de tickets 58mm', 673.0, 'TECNOLOGIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="impresora termica de tickets 58mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -416,9 +360,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('impresora termica de tickets 58mm', 673.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="dedales para telefono" data-name="dedales para telefono">
+            <div class="card fade-in" data-brand="dedales para telefono" data-name="dedales para telefono">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Dedales para telefono', 25.0, 'TECNOLOGIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Dedales para telefono" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 30 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -429,9 +374,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Dedales para telefono', 25.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="marcador para pizarron varios colores doble punta" data-name="marcador para pizarron varios colores doble punta">
+            <div class="card fade-in" data-brand="marcador para pizarron varios colores doble punta" data-name="marcador para pizarron varios colores doble punta">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Marcador para pizarron varios colores DOBLE PUNTA', 13.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Marcador para pizarron varios colores DOBLE PUNTA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -442,9 +388,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Marcador para pizarron varios colores DOBLE PUNTA', 13.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cuaderno prof esp 100h dibujo star kid estrella" data-name="cuaderno prof esp 100h dibujo star kid estrella">
+            <div class="card fade-in" data-brand="cuaderno prof esp 100h dibujo star kid estrella" data-name="cuaderno prof esp 100h dibujo star kid estrella">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA', 22.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -455,9 +402,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA', 22.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cuaderno estrella prof 100h c7" data-name="cuaderno estrella prof 100h c7">
+            <div class="card fade-in" data-brand="cuaderno estrella prof 100h c7" data-name="cuaderno estrella prof 100h c7">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO ESTRELLA PROF 100H C7', 22.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO ESTRELLA PROF 100H C7" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 3 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -468,9 +416,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('CUADERNO ESTRELLA PROF 100H C7', 22.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cuaderno profesional  raya star kid estrella 100h" data-name="cuaderno profesional  raya star kid estrella 100h">
+            <div class="card fade-in" data-brand="cuaderno profesional  raya star kid estrella 100h" data-name="cuaderno profesional  raya star kid estrella 100h">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H', 22.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 33 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -481,9 +430,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H', 22.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cuaderno estrella apuntes espiral 100 hojas" data-name="cuaderno estrella apuntes espiral 100 hojas">
+            <div class="card fade-in" data-brand="cuaderno estrella apuntes espiral 100 hojas" data-name="cuaderno estrella apuntes espiral 100 hojas">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS', 15.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 8 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -494,9 +444,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lamina alfabeto" data-name="lamina alfabeto">
+            <div class="card fade-in" data-brand="lamina alfabeto" data-name="lamina alfabeto">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lamina Alfabeto', 50.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Lamina Alfabeto" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -507,9 +458,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Lamina Alfabeto', 50.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="colores de madera jocar 12 piezas" data-name="colores de madera jocar 12 piezas">
+            <div class="card fade-in" data-brand="colores de madera jocar 12 piezas" data-name="colores de madera jocar 12 piezas">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Colores de madera jocar 12 piezas', 45.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Colores de madera jocar 12 piezas" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -520,9 +472,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Colores de madera jocar 12 piezas', 45.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="regla metálica pascua 50 cm" data-name="regla metálica pascua 50 cm">
+            <div class="card fade-in" data-brand="regla metálica pascua 50 cm" data-name="regla metálica pascua 50 cm">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Regla metálica pascua 50 cm', 57.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Regla metálica pascua 50 cm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -533,9 +486,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Regla metálica pascua 50 cm', 57.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="corrector pascua de 2 ml" data-name="corrector pascua de 2 ml">
+            <div class="card fade-in" data-brand="corrector pascua de 2 ml" data-name="corrector pascua de 2 ml">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'corrector pascua de 2 ml', 10.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="corrector pascua de 2 ml" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 11 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -546,9 +500,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('corrector pascua de 2 ml', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="corrector jumbo liquido brocha de 5 ml" data-name="corrector jumbo liquido brocha de 5 ml">
+            <div class="card fade-in" data-brand="corrector jumbo liquido brocha de 5 ml" data-name="corrector jumbo liquido brocha de 5 ml">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'corrector jumbo liquido brocha de 5 ml', 8.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="corrector jumbo liquido brocha de 5 ml" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -559,9 +514,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('corrector jumbo liquido brocha de 5 ml', 8.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="corrector pascua 2 en 1 pluma y brocha" data-name="corrector pascua 2 en 1 pluma y brocha">
+            <div class="card fade-in" data-brand="corrector pascua 2 en 1 pluma y brocha" data-name="corrector pascua 2 en 1 pluma y brocha">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'corrector pascua 2 en 1 pluma y brocha', 16.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="corrector pascua 2 en 1 pluma y brocha" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -572,9 +528,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('corrector pascua 2 en 1 pluma y brocha', 16.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="papel tamaño carta hus" data-name="papel tamaño carta hus">
+            <div class="card fade-in" data-brand="papel tamaño carta hus" data-name="papel tamaño carta hus">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'papel tamaño carta hus', 0.33, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="papel tamaño carta hus" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 500 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -585,9 +542,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('papel tamaño carta hus', 0.33)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="goma dixon bs 30" data-name="goma dixon bs 30">
+            <div class="card fade-in" data-brand="goma dixon bs 30" data-name="goma dixon bs 30">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Goma Dixon bs 30', 6.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Goma Dixon bs 30" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 18 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -598,9 +556,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Goma Dixon bs 30', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="silicon en barra  devek delgada pieza" data-name="silicon en barra  devek delgada pieza">
+            <div class="card fade-in" data-brand="silicon en barra  devek delgada pieza" data-name="silicon en barra  devek delgada pieza">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Silicon en barra  Devek delgada PIEZA', 3.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Silicon en barra  Devek delgada PIEZA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 98 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -611,9 +570,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Silicon en barra  Devek delgada PIEZA', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta azul rey" data-name="foamy diamantado tamaño carta azul rey">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta azul rey" data-name="foamy diamantado tamaño carta azul rey">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta Azul Rey', 6.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta Azul Rey" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -624,9 +584,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta Azul Rey', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color plata" data-name="foamy diamantado tamaño carta color plata">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color plata" data-name="foamy diamantado tamaño carta color plata">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Plata', 6.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Plata" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -637,9 +598,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Plata', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color gris" data-name="foamy diamantado tamaño carta color gris">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color gris" data-name="foamy diamantado tamaño carta color gris">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Gris', 6.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Gris" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -650,9 +612,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Gris', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color cafe" data-name="foamy diamantado tamaño carta color cafe">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color cafe" data-name="foamy diamantado tamaño carta color cafe">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Cafe', 6.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Cafe" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -663,9 +626,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Cafe', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color rojo" data-name="foamy diamantado tamaño carta color rojo">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rojo" data-name="foamy diamantado tamaño carta color rojo">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rojo', 10.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Rojo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -676,9 +640,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rojo', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color rosa pastel" data-name="foamy diamantado tamaño carta color rosa pastel">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rosa pastel" data-name="foamy diamantado tamaño carta color rosa pastel">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rosa Pastel', 6.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Rosa Pastel" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -689,9 +654,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rosa Pastel', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color amarillo" data-name="foamy diamantado tamaño carta color amarillo">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color amarillo" data-name="foamy diamantado tamaño carta color amarillo">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Amarillo', 10.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Amarillo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -702,9 +668,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Amarillo', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color blanco" data-name="foamy diamantado tamaño carta color blanco">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color blanco" data-name="foamy diamantado tamaño carta color blanco">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Blanco', 6.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Blanco" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -715,9 +682,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Blanco', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color oro" data-name="foamy diamantado tamaño carta color oro">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color oro" data-name="foamy diamantado tamaño carta color oro">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color oro', 6.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color oro" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -728,9 +696,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color oro', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color verde bandera irisado" data-name="foamy diamantado tamaño carta color verde bandera irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color verde bandera irisado" data-name="foamy diamantado tamaño carta color verde bandera irisado">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color verde bandera irisado', 9.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color verde bandera irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -741,9 +710,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color verde bandera irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color azul pastel irisado" data-name="foamy diamantado tamaño carta color azul pastel irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color azul pastel irisado" data-name="foamy diamantado tamaño carta color azul pastel irisado">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Azul Pastel irisado', 9.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Azul Pastel irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -754,9 +724,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Azul Pastel irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color fucsia  irisado" data-name="foamy diamantado tamaño carta color fucsia  irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color fucsia  irisado" data-name="foamy diamantado tamaño carta color fucsia  irisado">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Fucsia  irisado', 9.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Fucsia  irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -767,9 +738,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Fucsia  irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color naranja  irisado" data-name="foamy diamantado tamaño carta color naranja  irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color naranja  irisado" data-name="foamy diamantado tamaño carta color naranja  irisado">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Naranja  irisado', 9.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Naranja  irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -780,9 +752,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Naranja  irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado tamaño carta color rosa pastel  irisado" data-name="foamy diamantado tamaño carta color rosa pastel  irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rosa pastel  irisado" data-name="foamy diamantado tamaño carta color rosa pastel  irisado">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rosa Pastel  irisado', 9.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Rosa Pastel  irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -793,9 +766,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rosa Pastel  irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy liso tamaño carta color verde bandera" data-name="foamy liso tamaño carta color verde bandera">
+            <div class="card fade-in" data-brand="foamy liso tamaño carta color verde bandera" data-name="foamy liso tamaño carta color verde bandera">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy liso tamaño carta color verde bandera', 3.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy liso tamaño carta color verde bandera" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -806,9 +780,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy liso tamaño carta color verde bandera', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy liso tamaño carta color azul cielo" data-name="foamy liso tamaño carta color azul cielo">
+            <div class="card fade-in" data-brand="foamy liso tamaño carta color azul cielo" data-name="foamy liso tamaño carta color azul cielo">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy liso tamaño carta color azul cielo', 3.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy liso tamaño carta color azul cielo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -819,9 +794,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy liso tamaño carta color azul cielo', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="foamy diamantado color verde bandera" data-name="foamy diamantado color verde bandera">
+            <div class="card fade-in" data-brand="foamy diamantado color verde bandera" data-name="foamy diamantado color verde bandera">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado color verde bandera', 4.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado color verde bandera" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 60 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -832,9 +808,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Foamy diamantado color verde bandera', 4.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cordon para gafete  de macramé azul marino" data-name="cordon para gafete  de macramé azul marino">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé azul marino" data-name="cordon para gafete  de macramé azul marino">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé azul marino', 3.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé azul marino" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -845,9 +822,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé azul marino', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -858,9 +836,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -871,9 +850,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -884,9 +864,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -897,9 +878,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -910,9 +892,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="broche para archivo jumbo pieza" data-name="broche para archivo jumbo pieza">
+            <div class="card fade-in" data-brand="broche para archivo jumbo pieza" data-name="broche para archivo jumbo pieza">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Broche para archivo jumbo PIEZA', 1.5, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Broche para archivo jumbo PIEZA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 100 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -923,9 +906,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Broche para archivo jumbo PIEZA', 1.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cúter retráctil grueso uso pesado con guía" data-name="cúter retráctil grueso uso pesado con guía">
+            <div class="card fade-in" data-brand="cúter retráctil grueso uso pesado con guía" data-name="cúter retráctil grueso uso pesado con guía">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cúter Retráctil Grueso Uso Pesado con Guía', 40.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Cúter Retráctil Grueso Uso Pesado con Guía" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -936,9 +920,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Cúter Retráctil Grueso Uso Pesado con Guía', 40.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cúter retráctil delgado de plástico para uso ligero sin guía" data-name="cúter retráctil delgado de plástico para uso ligero sin guía">
+            <div class="card fade-in" data-brand="cúter retráctil delgado de plástico para uso ligero sin guía" data-name="cúter retráctil delgado de plástico para uso ligero sin guía">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía', 11.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 8 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -949,9 +934,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía', 11.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="tijera escolar punta roma delta mod. al100" data-name="tijera escolar punta roma delta mod. al100">
+            <div class="card fade-in" data-brand="tijera escolar punta roma delta mod. al100" data-name="tijera escolar punta roma delta mod. al100">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Tijera Escolar Punta Roma Delta Mod. AL100', 14.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Tijera Escolar Punta Roma Delta Mod. AL100" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -962,9 +948,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Tijera Escolar Punta Roma Delta Mod. AL100', 14.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="tijera escolar punta roma tij-es001" data-name="tijera escolar punta roma tij-es001">
+            <div class="card fade-in" data-brand="tijera escolar punta roma tij-es001" data-name="tijera escolar punta roma tij-es001">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Tijera escolar punta roma TIJ-ES001', 15.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Tijera escolar punta roma TIJ-ES001" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -975,9 +962,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Tijera escolar punta roma TIJ-ES001', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="crayones escrimex jumbo c/12 pzas" data-name="crayones escrimex jumbo c/12 pzas">
+            <div class="card fade-in" data-brand="crayones escrimex jumbo c/12 pzas" data-name="crayones escrimex jumbo c/12 pzas">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Crayones Escrimex Jumbo C/12 PZAS', 25.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Crayones Escrimex Jumbo C/12 PZAS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -988,9 +976,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Crayones Escrimex Jumbo C/12 PZAS', 25.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="acta de nacimiento" data-name="acta de nacimiento">
+            <div class="card fade-in" data-brand="acta de nacimiento" data-name="acta de nacimiento">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Acta de nacimiento', 100.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Acta de nacimiento" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1001,9 +990,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Acta de nacimiento', 100.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="rfc" data-name="rfc">
+            <div class="card fade-in" data-brand="rfc" data-name="rfc">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'RFC', 180.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="RFC" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1014,9 +1004,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('RFC', 180.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="numero de seguro social" data-name="numero de seguro social">
+            <div class="card fade-in" data-brand="numero de seguro social" data-name="numero de seguro social">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Numero de Seguro Social', 50.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Numero de Seguro Social" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 18 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1027,9 +1018,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Numero de Seguro Social', 50.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="constancia de no derecho inhabilitacion imss" data-name="constancia de no derecho inhabilitacion imss">
+            <div class="card fade-in" data-brand="constancia de no derecho inhabilitacion imss" data-name="constancia de no derecho inhabilitacion imss">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Constancia de no derecho inhabilitacion imss', 140.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Constancia de no derecho inhabilitacion imss" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1040,9 +1032,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Constancia de no derecho inhabilitacion imss', 140.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="antecedentes  no penales" data-name="antecedentes  no penales">
+            <div class="card fade-in" data-brand="antecedentes  no penales" data-name="antecedentes  no penales">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Antecedentes  no Penales', 320.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Antecedentes  no Penales" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1053,9 +1046,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Antecedentes  no Penales', 320.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="recibo de luz" data-name="recibo de luz">
+            <div class="card fade-in" data-brand="recibo de luz" data-name="recibo de luz">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Recibo de luz', 15.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Recibo de luz" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 19 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1066,9 +1060,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Recibo de luz', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lapiz de grafito triangular shely pieza" data-name="lapiz de grafito triangular shely pieza">
+            <div class="card fade-in" data-brand="lapiz de grafito triangular shely pieza" data-name="lapiz de grafito triangular shely pieza">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapiz de grafito triangular Shely Pieza', 7.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="lapiz de grafito triangular Shely Pieza" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 8 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1079,9 +1074,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('lapiz de grafito triangular Shely Pieza', 7.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lapiz de grafito metalicos pieza" data-name="lapiz de grafito metalicos pieza">
+            <div class="card fade-in" data-brand="lapiz de grafito metalicos pieza" data-name="lapiz de grafito metalicos pieza">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lapiz de grafito metalicos Pieza', 7.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Lapiz de grafito metalicos Pieza" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1092,9 +1088,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Lapiz de grafito metalicos Pieza', 7.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="folder tamaño oficio color crema" data-name="folder tamaño oficio color crema">
+            <div class="card fade-in" data-brand="folder tamaño oficio color crema" data-name="folder tamaño oficio color crema">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Folder tamaño oficio color crema', 5.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Folder tamaño oficio color crema" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1105,9 +1102,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Folder tamaño oficio color crema', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lapicero shely gel colores diamantados  pieza" data-name="lapicero shely gel colores diamantados  pieza">
+            <div class="card fade-in" data-brand="lapicero shely gel colores diamantados  pieza" data-name="lapicero shely gel colores diamantados  pieza">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA', 8.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1118,9 +1116,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA', 8.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="pin point negra fino boligrafo azor 7mm" data-name="pin point negra fino boligrafo azor 7mm">
+            <div class="card fade-in" data-brand="pin point negra fino boligrafo azor 7mm" data-name="pin point negra fino boligrafo azor 7mm">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM', 6.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 11 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1131,9 +1130,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="pin point azul fino boligrafo azor 7mm" data-name="pin point azul fino boligrafo azor 7mm">
+            <div class="card fade-in" data-brand="pin point azul fino boligrafo azor 7mm" data-name="pin point azul fino boligrafo azor 7mm">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM', 6.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1144,9 +1144,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lapicero de tinta uni-ball color negro" data-name="lapicero de tinta uni-ball color negro">
+            <div class="card fade-in" data-brand="lapicero de tinta uni-ball color negro" data-name="lapicero de tinta uni-ball color negro">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapicero de tinta uni-ball color negro', 44.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="lapicero de tinta uni-ball color negro" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1157,9 +1158,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('lapicero de tinta uni-ball color negro', 44.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lapicero de tinta uni-super ink deluxe fine tinta negra" data-name="lapicero de tinta uni-super ink deluxe fine tinta negra">
+            <div class="card fade-in" data-brand="lapicero de tinta uni-super ink deluxe fine tinta negra" data-name="lapicero de tinta uni-super ink deluxe fine tinta negra">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapicero de tinta uni-super ink deluxe fine tinta negra', 62.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="lapicero de tinta uni-super ink deluxe fine tinta negra" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1170,9 +1172,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('lapicero de tinta uni-super ink deluxe fine tinta negra', 62.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cinta adhesiva devek 12 mm x 33 mt transparente" data-name="cinta adhesiva devek 12 mm x 33 mt transparente">
+            <div class="card fade-in" data-brand="cinta adhesiva devek 12 mm x 33 mt transparente" data-name="cinta adhesiva devek 12 mm x 33 mt transparente">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta adhesiva devek 12 mm x 33 mt transparente', 8.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cinta adhesiva devek 12 mm x 33 mt transparente" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1183,9 +1186,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cinta adhesiva devek 12 mm x 33 mt transparente', 8.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cinta de empaque transparente 48 mm x 50 mm" data-name="cinta de empaque transparente 48 mm x 50 mm">
+            <div class="card fade-in" data-brand="cinta de empaque transparente 48 mm x 50 mm" data-name="cinta de empaque transparente 48 mm x 50 mm">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta de empaque transparente 48 mm X 50 mm', 19.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cinta de empaque transparente 48 mm X 50 mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1196,9 +1200,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cinta de empaque transparente 48 mm X 50 mm', 19.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cinta de empaque transparente 48 mm x 150 mm" data-name="cinta de empaque transparente 48 mm x 150 mm">
+            <div class="card fade-in" data-brand="cinta de empaque transparente 48 mm x 150 mm" data-name="cinta de empaque transparente 48 mm x 150 mm">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta de empaque transparente 48 mm X 150 mm', 42.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cinta de empaque transparente 48 mm X 150 mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1209,9 +1214,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cinta de empaque transparente 48 mm X 150 mm', 42.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cartulina bristol 50 x 65 amarillos" data-name="cartulina bristol 50 x 65 amarillos">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 amarillos" data-name="cartulina bristol 50 x 65 amarillos">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cartulina Bristol 50 X 65 AMARILLOS', 5.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cartulina Bristol 50 X 65 AMARILLOS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1222,9 +1228,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('cartulina Bristol 50 X 65 AMARILLOS', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cartulina bristol 50 x 65 blanca" data-name="cartulina bristol 50 x 65 blanca">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 blanca" data-name="cartulina bristol 50 x 65 blanca">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cartulina Bristol 50 X 65 BLANCA', 5.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Cartulina Bristol 50 X 65 BLANCA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1235,9 +1242,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 BLANCA', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cartulina bristol 50 x 65 azul" data-name="cartulina bristol 50 x 65 azul">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 azul" data-name="cartulina bristol 50 x 65 azul">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cartulina Bristol 50 X 65 AZUL', 5.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Cartulina Bristol 50 X 65 AZUL" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1248,9 +1256,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 AZUL', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="cartulina bristol 50 x 65 verde" data-name="cartulina bristol 50 x 65 verde">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 verde" data-name="cartulina bristol 50 x 65 verde">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cartulina Bristol 50 X 65 VERDE', 5.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Cartulina Bristol 50 X 65 VERDE" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1261,9 +1270,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 VERDE', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lapiz maped hb 851759 piezas" data-name="lapiz maped hb 851759 piezas">
+            <div class="card fade-in" data-brand="lapiz maped hb 851759 piezas" data-name="lapiz maped hb 851759 piezas">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPIZ MAPED HB 851759 piezas', 6.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="LAPIZ MAPED HB 851759 piezas" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1274,9 +1284,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('LAPIZ MAPED HB 851759 piezas', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="lapices de colores jocar madera 12 piezas" data-name="lapices de colores jocar madera 12 piezas">
+            <div class="card fade-in" data-brand="lapices de colores jocar madera 12 piezas" data-name="lapices de colores jocar madera 12 piezas">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPICES DE COLORES JOCAR MADERA 12 PIEZAS', 35.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="LAPICES DE COLORES JOCAR MADERA 12 PIEZAS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1287,9 +1298,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('LAPICES DE COLORES JOCAR MADERA 12 PIEZAS', 35.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="marcador permanente escrimex punta cincel negro" data-name="marcador permanente escrimex punta cincel negro">
+            <div class="card fade-in" data-brand="marcador permanente escrimex punta cincel negro" data-name="marcador permanente escrimex punta cincel negro">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Marcador Permanente Escrimex Punta Cincel Negro', 13.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Marcador Permanente Escrimex Punta Cincel Negro" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1300,9 +1312,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Marcador Permanente Escrimex Punta Cincel Negro', 13.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="marcador permanente pascua punta fina negro" data-name="marcador permanente pascua punta fina negro">
+            <div class="card fade-in" data-brand="marcador permanente pascua punta fina negro" data-name="marcador permanente pascua punta fina negro">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente pascua punta fina NEGRO', 16.5, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="marcador permanente pascua punta fina NEGRO" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1313,9 +1326,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('marcador permanente pascua punta fina NEGRO', 16.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="marcador permanente punta fina azul pascua" data-name="marcador permanente punta fina azul pascua">
+            <div class="card fade-in" data-brand="marcador permanente punta fina azul pascua" data-name="marcador permanente punta fina azul pascua">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente punta fina AZUL PASCUA', 16.5, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="marcador permanente punta fina AZUL PASCUA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1326,9 +1340,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('marcador permanente punta fina AZUL PASCUA', 16.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="marcador permanente esterbrook negro sharpie" data-name="marcador permanente esterbrook negro sharpie">
+            <div class="card fade-in" data-brand="marcador permanente esterbrook negro sharpie" data-name="marcador permanente esterbrook negro sharpie">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE', 48.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1339,9 +1354,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE', 48.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="marcador permanente color rojo" data-name="marcador permanente color rojo">
+            <div class="card fade-in" data-brand="marcador permanente color rojo" data-name="marcador permanente color rojo">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente color rojo', 13.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="marcador permanente color rojo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1352,9 +1368,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('marcador permanente color rojo', 13.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="porta gafete sinotec horizontal 85 x 105 mm" data-name="porta gafete sinotec horizontal 85 x 105 mm">
+            <div class="card fade-in" data-brand="porta gafete sinotec horizontal 85 x 105 mm" data-name="porta gafete sinotec horizontal 85 x 105 mm">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Porta gafete sinotec horizontal 85 X 105 mm', 5.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Porta gafete sinotec horizontal 85 X 105 mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1365,9 +1382,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Porta gafete sinotec horizontal 85 X 105 mm', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="sacapunta jocar surtido" data-name="sacapunta jocar surtido">
+            <div class="card fade-in" data-brand="sacapunta jocar surtido" data-name="sacapunta jocar surtido">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Sacapunta Jocar surtido', 3.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Sacapunta Jocar surtido" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 150 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1378,9 +1396,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Sacapunta Jocar surtido', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="sacapunta jocar con deposito y goma" data-name="sacapunta jocar con deposito y goma">
+            <div class="card fade-in" data-brand="sacapunta jocar con deposito y goma" data-name="sacapunta jocar con deposito y goma">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Sacapunta Jocar con deposito y goma', 15.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Sacapunta Jocar con deposito y goma" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1391,9 +1410,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Sacapunta Jocar con deposito y goma', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="libreta profesional de raya sazz 100 hojas" data-name="libreta profesional de raya sazz 100 hojas">
+            <div class="card fade-in" data-brand="libreta profesional de raya sazz 100 hojas" data-name="libreta profesional de raya sazz 100 hojas">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Libreta profesional de raya sazz 100 hojas', 30.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Libreta profesional de raya sazz 100 hojas" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1404,9 +1424,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Libreta profesional de raya sazz 100 hojas', 30.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="copia o impresión b/n" data-name="copia o impresión b/n">
+            <div class="card fade-in" data-brand="copia o impresión b/n" data-name="copia o impresión b/n">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Copia o Impresión B/N', 2.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Copia o Impresión B/N" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4960 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1417,9 +1438,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('Copia o Impresión B/N', 2.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="copias e imprecio a color" data-name="copias e imprecio a color">
+            <div class="card fade-in" data-brand="copias e imprecio a color" data-name="copias e imprecio a color">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'COPIAS E IMPRECIO A COLOR', 4.0, 'PAPELERIA')">
+                        
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="COPIAS E IMPRECIO A COLOR" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 500 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1430,9 +1452,10 @@
                 </div>
                 <button class="btn-buy" onclick="addToCart('COPIAS E IMPRECIO A COLOR', 4.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card" data-brand="pegamento blanco escolar 60g" data-name="pegamento blanco escolar 60g">
+            <div class="card fade-in" data-brand="pegamento blanco escolar 60g" data-name="pegamento blanco escolar 60g">
                 <div>
                     <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'PEGAMENTO BLANCO ESCOLAR 60G', 13.0, 'PAPELERIA')">
+                        <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="PEGAMENTO BLANCO ESCOLAR 60G" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
                         <div class="quick-view-btn"><i class="fa-solid fa-eye"></i> Vista Rápida</div>
@@ -1445,8 +1468,38 @@
             </div>
         </div>
 
+        <!-- CARRUSEL INFINITO DE MARCAS -->
+        <div class="marquee-container fade-in">
+            <h2>Nuestros Distribuidores Oficiales</h2>
+            <div class="marquee">
+                <div class="marquee-content">
+                    <span class="brand-logo">SCRIBE</span>
+                    <span class="brand-logo">TRUPER</span>
+                    <span class="brand-logo">EPSON</span>
+                    <span class="brand-logo">MAPED</span>
+                    <span class="brand-logo">DIXON</span>
+                    <span class="brand-logo">NORMA</span>
+                    <span class="brand-logo">AZOR</span>
+                    <span class="brand-logo">PASCUA</span>
+                    <span class="brand-logo">CANON</span>
+                    <span class="brand-logo">VOLTECK</span>
+                    <!-- Duplicate for infinite effect -->
+                    <span class="brand-logo">SCRIBE</span>
+                    <span class="brand-logo">TRUPER</span>
+                    <span class="brand-logo">EPSON</span>
+                    <span class="brand-logo">MAPED</span>
+                    <span class="brand-logo">DIXON</span>
+                    <span class="brand-logo">NORMA</span>
+                    <span class="brand-logo">AZOR</span>
+                    <span class="brand-logo">PASCUA</span>
+                    <span class="brand-logo">CANON</span>
+                    <span class="brand-logo">VOLTECK</span>
+                </div>
+            </div>
+        </div>
+
         <!-- CARRITO Y PAGOS -->
-        <div class="cart-section" id="cart-section-target">
+        <div class="cart-section fade-in" id="cart-section-target">
             <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--texto-oscuro);"><i class="fa-solid fa-basket-shopping" style="color: var(--primario);"></i> Tu Carrito de Compras</h3>
             <ul id="cart-items" style="list-style: none; margin: 15px 0; padding-left: 0;">
                 <li style="color: var(--texto-claro); background: var(--fondo-gris); padding: 20px; border-radius: 12px; text-align: center; border: 1px dashed var(--borde-card);">El carrito está vacío. Agrega productos para continuar.</li>
@@ -1457,13 +1510,13 @@
             </div>
             
             <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-                <button class="btn-buy" style="background:#009ee3; width: auto; font-size: 1.1rem; padding: 15px 30px;" onclick="alert('Redirigiendo a pasarela segura de Mercado Pago...')"><i class="fa-solid fa-lock"></i> Pagar con Mercado Pago</button>
+                <button class="btn-buy" style="background:#009ee3; width: auto; font-size: 1.1rem; padding: 15px 30px;" onclick="alert('Redirigiendo a pasarela segura de Mercado Pago...')"><i class="fa-solid fa-lock"></i> Mercado Pago</button>
                 <a href="https://www.paypal.com/ncp/payment/MB5G8V4ETRCKE" target="_blank" class="btn-buy" style="background:#00457C; width: auto; gap: 8px; font-size: 1.1rem; padding: 15px 30px;"><i class="fa-brands fa-paypal"></i> Pagar con PayPal</a>
             </div>
         </div>
 
         <!-- COTIZACIONES -->
-        <div class="quote-section">
+        <div class="quote-section fade-in">
             <h2 style="text-align: left; margin-bottom: 10px; color: var(--texto-oscuro);">¿Requieres una Cotización?</h2>
             <p style="margin-bottom: 25px; color: var(--texto-claro);">Ideal para pedidos grandes, listas escolares o suministros de ferretería.</p>
             
@@ -1479,8 +1532,8 @@
         </div>
 
         <!-- RESEÑAS -->
-        <div class="reviews-section">
-            <h2 style="text-align: center; color: var(--texto-oscuro);">Lo que opinan nuestros clientes</h2>
+        <div class="reviews-section fade-in">
+            <h2 style="text-align: center; color: var(--texto-oscuro); margin-bottom: 30px;">Lo que opinan nuestros clientes</h2>
             <div class="reviews-grid">
                 <div class="review-card">
                     <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
@@ -1494,60 +1547,87 @@
                 </div>
             </div>
         </div>
-
-        <!-- UBICACIÓN -->
-        <div class="info-section" style="text-align: center;">
-            <h2 style="color: var(--texto-oscuro);">Visítanos o Contáctanos</h2>
-            <p style="margin-bottom: 10px; color: var(--texto-oscuro); font-weight: 600; font-size: 1.1rem;"><i class="fa-solid fa-location-dot" style="color: var(--primario);"></i> Avenida Central Norte, Local Comercial</p>
-            <p style="margin-bottom: 20px; color: var(--texto-claro);"><i class="fa-solid fa-clock" style="color: var(--primario);"></i> Horarios: Lunes a Sábado de 8:00 AM a 7:00 PM</p>
-        </div>
     </div>
 
     <!-- FOOTER -->
     <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 20px; color: white;">
+            PAPELERÍA JHERLY
+        </div>
         <div class="links">
             <a href="#" onclick="alert('Nuestros envíos se realizan de 24 a 48 horas tras confirmar tu pago.')">Políticas de Envío</a>
             <a href="#" onclick="alert('Garantía de cambio en productos defectuosos dentro de los primeros 7 días.')">Políticas de Devolución</a>
             <a href="#" onclick="alert('Tus datos están seguros y protegidos conforme a la ley de privacidad.')">Aviso de Privacidad</a>
         </div>
-        <p style="color: #94a3b8;">&copy; 2026 Papelería Jherly. Todos los derechos reservados.</p>
+        <p style="color: #64748b;">&copy; 2026 Papelería Jherly. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // VARIABLES GLOBALES DE FILTRO
+        // --- 1. LÓGICA DEL CARRUSEL ---
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        
+        function changeSlide(index) {
+            slides[currentSlideIndex].classList.remove('active');
+            dots[currentSlideIndex].classList.remove('active');
+            currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
+        
+        setInterval(() => {
+            let nextIndex = (currentSlideIndex + 1) % slides.length;
+            changeSlide(nextIndex);
+        }, 4000);
+
+
+        // --- 2. LÓGICA DE ANIMACIÓN SCROLL (FADE IN) ---
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+        
+        faders.forEach(fader => { appearOnScroll.observe(fader); });
+
+
+        // --- 3. BOTÓN VOLVER ARRIBA ---
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+
+
+        // --- 4. LÓGICA DE BÚSQUEDA Y MARCAS ---
         let currentBrand = 'ALL';
 
-        // FILTRADO POR MARCA (BOTONES)
         function filterByBrand(brand, btnElement) {
-            // Actualizar botones
             document.querySelectorAll('.brand-item').forEach(btn => btn.classList.remove('active'));
             if(btnElement) btnElement.classList.add('active');
-
             currentBrand = brand.toLowerCase();
-            
-            // Actualizar Título
-            if(brand === 'ALL') {
-                document.getElementById('catalog-title').innerText = 'General';
-            } else {
-                document.getElementById('catalog-title').innerText = brand;
-            }
-            
+            document.getElementById('catalog-title').innerText = (brand === 'ALL') ? 'General' : brand;
             applyFilters();
-            
             document.getElementById('catalog-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // FUNCIÓN PARA QUITAR ACENTOS
         function removeAccents(str) {
             return str.normalize("NFD").replace(/[̀-ͯ]/g, "");
         }
 
-        // APLICAR BUSCADOR Y MARCAS EN CONJUNTO (SIN ORDENAMIENTO DE PRECIOS)
         function applyFilters() {
             let searchInputRaw = document.getElementById('searchInput').value.toLowerCase();
             let searchQuery = removeAccents(searchInputRaw);
             let searchTerms = searchQuery.split(' ').filter(term => term.trim() !== '');
-            
             let cards = document.querySelectorAll('.card');
             let visibleCount = 0;
             
@@ -1557,7 +1637,6 @@
                 let currentBrandSafe = removeAccents(currentBrand);
                 
                 let matchBrand = (currentBrandSafe === 'all' || productBrandData.includes(currentBrandSafe));
-                
                 let matchSearch = true;
                 if (searchTerms.length > 0) {
                     matchSearch = searchTerms.every(term => productNameData.includes(term));
@@ -1565,43 +1644,42 @@
 
                 if (matchBrand && matchSearch) {
                     card.style.display = 'flex';
+                    // Pequeño retardo para reiniciar la animación fade-in si es necesario
+                    card.classList.add('visible');
                     visibleCount++;
                 } else {
                     card.style.display = 'none';
+                    card.classList.remove('visible');
                 }
             });
             
             let noResults = document.getElementById('no-results');
-            if(visibleCount === 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
+            noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
         }
 
-        // VISTA RÁPIDA (MODAL)
+
+        // --- 5. VISTA RÁPIDA ---
         function openQuickView(imgSrc, title, price, dept) {
             document.getElementById('qv-img').src = imgSrc;
             document.getElementById('qv-title').innerText = title;
             document.getElementById('qv-price').innerText = "$" + price.toFixed(2);
             document.getElementById('qv-dept').innerText = "Depto: " + dept;
-            
             document.getElementById('qv-add-btn').onclick = function() {
                 addToCart(title, price);
                 closeQuickView();
             };
-            
             document.getElementById('quickViewModal').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeQuickView(e) {
             if(e) e.stopPropagation();
             document.getElementById('quickViewModal').classList.remove('active');
-            document.body.style.overflow = 'auto'; // Restaurar scroll
+            document.body.style.overflow = 'auto'; 
         }
 
-        // CARRITO
+
+        // --- 6. CARRITO Y TOASTS ---
         let total = 0; 
         let count = 0;
         let cart = [];
@@ -1611,7 +1689,6 @@
             cart.push({name: name, price: price});
             renderCart();
             showToast(`¡Agregado al carrito: ${name}!`);
-            // Animación sencilla
             let cartIcon = document.querySelector('nav');
             cartIcon.style.transform = 'scale(1.1)';
             setTimeout(() => { cartIcon.style.transform = 'scale(1)'; }, 200);
@@ -1634,7 +1711,6 @@
                     total += item.price;
                     let li = document.createElement('li');
                     li.className = 'cart-item-row';
-                    
                     li.innerHTML = `<span><i class="fa-solid fa-check" style="color:var(--secundario);"></i> <strong>${item.name}</strong> - <span style="color:var(--texto-oscuro); font-weight:800;">$${item.price.toFixed(2)}</span></span>` +
                                    `<button onclick="removeFromCart(${index})"><i class="fa-solid fa-trash"></i> Quitar</button>`;
                     cartItemsElement.appendChild(li);
@@ -1645,19 +1721,13 @@
             document.getElementById('cart-count').innerText = count;
         }
 
-        // TOAST NOTIFICATIONS
         function showToast(message) {
             let container = document.getElementById('toast-container');
             let toast = document.createElement('div');
             toast.className = 'toast';
             toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${message}</span>`;
-            
             container.appendChild(toast);
-            
-            // Trigger animation
             setTimeout(() => { toast.classList.add('show'); }, 10);
-            
-            // Remove after 3 seconds
             setTimeout(() => { 
                 toast.classList.remove('show'); 
                 setTimeout(() => { toast.remove(); }, 300);
