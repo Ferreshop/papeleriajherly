@@ -1619,7 +1619,7 @@
 
         // CODIFICACIÓN SEGURA PARA REMOVER ACENTOS Y TILDES (Evita errores en navegadores)
         function removeAccents(str) {
-            return str.normalize("NFD").replace(/[̀-ͯ]/g, "");
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
 
         function applyFilters() {
