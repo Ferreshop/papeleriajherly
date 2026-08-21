@@ -26,6 +26,12 @@
         
         body { background-color: var(--fondo-gris); color: var(--texto-oscuro); overflow-x: hidden; }
 
+        
+        /* MODO MAYOREO */
+        body.mayoreo-active { border-top: 5px solid var(--amarillo); }
+        body.mayoreo-active .btn-buy { background: var(--amarillo); color: var(--texto-oscuro); }
+        body.mayoreo-active .btn-buy:hover { background: #f59e0b; box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4); }
+
         /* CABECERA */
         header { 
             padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; 
@@ -164,6 +170,20 @@
     <div id="toast-container"></div>
     <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Volver Arriba"><i class="fa-solid fa-chevron-up"></i></button>
 
+    
+    <!-- MODAL MAYOREO -->
+    <div class="modal-overlay" id="mayoreoModal" onclick="closeMayoreoModal(event)">
+        <div class="modal-content" style="max-width: 400px; padding: 40px; text-align: center; display: block;" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeMayoreoModal(event)"><i class="fa-solid fa-xmark"></i></button>
+            <i class="fa-solid fa-crown" style="font-size: 3.5rem; color: var(--amarillo); margin-bottom: 15px;"></i>
+            <h2 style="margin-bottom: 10px; color: var(--texto-oscuro); font-weight: 800;">Acceso Mayoristas</h2>
+            <p style="color: var(--texto-claro); font-size: 0.95rem; margin-bottom: 25px;">Ingresa tu usuario y clave para desbloquear el catálogo con precios especiales.</p>
+            <input type="text" id="mayoreo-user" class="form-control" placeholder="Usuario (Ej. RENE)" style="text-align: center; font-weight: bold; text-transform: uppercase;">
+            <input type="password" id="mayoreo-pwd" class="form-control" placeholder="Contraseña de acceso" style="text-align: center; font-weight: bold; letter-spacing: 2px;">
+            <button class="btn-buy" style="background: var(--amarillo); color: var(--texto-oscuro); font-size: 1.1rem; padding: 15px;" onclick="loginMayoreo()">Iniciar Sesión</button>
+        </div>
+    </div>
+
     <!-- MODAL VISTA RÁPIDA -->
     <div class="modal-overlay" id="quickViewModal" onclick="closeQuickView(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
@@ -193,8 +213,9 @@
             <img src="https://i.imgur.com/hpeiEdQ.png" alt="Logo Papelería Jherly">
             PAPELERÍA JHERLY
         </div>
-        <nav onclick="document.getElementById('cart-section-target').scrollIntoView();">
-            <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span> Productos
+        <nav>
+            <div onclick="openMayoreoModal()" style="margin-right: 20px; color: var(--amarillo); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-crown"></i> Mayoreo</div>
+            <div onclick="document.getElementById('cart-section-target').scrollIntoView();" style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span> Prod.</div>
         </nav>
     </header>
 
@@ -276,9 +297,9 @@
         
         <div class="grid" id="product-grid">
 
-            <div class="card fade-in" data-brand="cámara wifi robotizada tipo domo 3mp, volteck" data-name="cámara wifi robotizada tipo domo 3mp, volteck">
+            <div class="card fade-in" data-brand="cámara wifi robotizada tipo domo 3mp, volteck" data-name="cámara wifi robotizada tipo domo 3mp, volteck" data-price="845.0" data-price-wholesale="718.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK', 845.0, 'FERRETERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK', 845.0, 718.25, 'FERRETERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
@@ -288,11 +309,11 @@
                     <h3 class="product-title">Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK</h3>
                     <p class="price-text">$845.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK', 845.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Cámara Wifi Robotizada Tipo Domo 3mp, VOLTECK', 845.0, 718.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="sensor de movimiento con alarma y timbre volteck" data-name="sensor de movimiento con alarma y timbre volteck">
+            <div class="card fade-in" data-brand="sensor de movimiento con alarma y timbre volteck" data-name="sensor de movimiento con alarma y timbre volteck" data-price="219.0" data-price-wholesale="186.15" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK', 219.0, 'FERRETERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK', 219.0, 186.15, 'FERRETERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -302,11 +323,11 @@
                     <h3 class="product-title">SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK</h3>
                     <p class="price-text">$219.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK', 219.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('SENSOR DE MOVIMIENTO CON ALARMA Y TIMBRE VOLTECK', 219.0, 186.15)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="curp" data-name="curp">
+            <div class="card fade-in" data-brand="curp" data-name="curp" data-price="10.0" data-price-wholesale="8.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Curp', 10.0, 'FERRETERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Curp', 10.0, 8.5, 'FERRETERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Curp" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 19 disp.</span>
@@ -316,11 +337,11 @@
                     <h3 class="product-title">Curp</h3>
                     <p class="price-text">$10.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Curp', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Curp', 10.0, 8.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000" data-name="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000">
+            <div class="card fade-in" data-brand="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000" data-name="regulador de voltaje qian 1000va automático con 5 contactos nema para pc y electrónicos en1000" data-price="430.0" data-price-wholesale="365.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000', 430.0, 'TECNOLOGIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000', 430.0, 365.5, 'TECNOLOGIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -330,11 +351,11 @@
                     <h3 class="product-title">Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000</h3>
                     <p class="price-text">$430.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000', 430.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Regulador de Voltaje Qian 1000VA Automático con 5 Contactos NEMA para PC y Electrónicos EN1000', 430.0, 365.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lector de código de barras tiaoma alámbrico" data-name="lector de código de barras tiaoma alámbrico">
+            <div class="card fade-in" data-brand="lector de código de barras tiaoma alámbrico" data-name="lector de código de barras tiaoma alámbrico" data-price="430.0" data-price-wholesale="365.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lector de Código de Barras Tiaoma Alámbrico', 430.0, 'TECNOLOGIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lector de Código de Barras Tiaoma Alámbrico', 430.0, 365.5, 'TECNOLOGIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Lector de Código de Barras Tiaoma Alámbrico" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -344,11 +365,11 @@
                     <h3 class="product-title">Lector de Código de Barras Tiaoma Alámbrico</h3>
                     <p class="price-text">$430.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Lector de Código de Barras Tiaoma Alámbrico', 430.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Lector de Código de Barras Tiaoma Alámbrico', 430.0, 365.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="impresora termica de tickets 58mm" data-name="impresora termica de tickets 58mm">
+            <div class="card fade-in" data-brand="impresora termica de tickets 58mm" data-name="impresora termica de tickets 58mm" data-price="673.0" data-price-wholesale="572.05" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'impresora termica de tickets 58mm', 673.0, 'TECNOLOGIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'impresora termica de tickets 58mm', 673.0, 572.05, 'TECNOLOGIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="impresora termica de tickets 58mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -358,11 +379,11 @@
                     <h3 class="product-title">impresora termica de tickets 58mm</h3>
                     <p class="price-text">$673.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('impresora termica de tickets 58mm', 673.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('impresora termica de tickets 58mm', 673.0, 572.05)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="dedales para telefono" data-name="dedales para telefono">
+            <div class="card fade-in" data-brand="dedales para telefono" data-name="dedales para telefono" data-price="25.0" data-price-wholesale="21.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Dedales para telefono', 25.0, 'TECNOLOGIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Dedales para telefono', 25.0, 21.25, 'TECNOLOGIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Dedales para telefono" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 30 disp.</span>
@@ -372,11 +393,11 @@
                     <h3 class="product-title">Dedales para telefono</h3>
                     <p class="price-text">$25.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Dedales para telefono', 25.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Dedales para telefono', 25.0, 21.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="marcador para pizarron varios colores doble punta" data-name="marcador para pizarron varios colores doble punta">
+            <div class="card fade-in" data-brand="marcador para pizarron varios colores doble punta" data-name="marcador para pizarron varios colores doble punta" data-price="13.0" data-price-wholesale="11.05" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Marcador para pizarron varios colores DOBLE PUNTA', 13.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Marcador para pizarron varios colores DOBLE PUNTA', 13.0, 11.05, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Marcador para pizarron varios colores DOBLE PUNTA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
@@ -386,11 +407,11 @@
                     <h3 class="product-title">Marcador para pizarron varios colores DOBLE PUNTA</h3>
                     <p class="price-text">$13.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Marcador para pizarron varios colores DOBLE PUNTA', 13.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Marcador para pizarron varios colores DOBLE PUNTA', 13.0, 11.05)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cuaderno prof esp 100h dibujo star kid estrella" data-name="cuaderno prof esp 100h dibujo star kid estrella">
+            <div class="card fade-in" data-brand="cuaderno prof esp 100h dibujo star kid estrella" data-name="cuaderno prof esp 100h dibujo star kid estrella" data-price="22.0" data-price-wholesale="18.7" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA', 22.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA', 22.0, 18.7, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
@@ -400,11 +421,11 @@
                     <h3 class="product-title">CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA</h3>
                     <p class="price-text">$22.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA', 22.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('CUADERNO PROF ESP 100H Dibujo STAR KID ESTRELLA', 22.0, 18.7)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cuaderno estrella prof 100h c7" data-name="cuaderno estrella prof 100h c7">
+            <div class="card fade-in" data-brand="cuaderno estrella prof 100h c7" data-name="cuaderno estrella prof 100h c7" data-price="22.0" data-price-wholesale="18.7" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO ESTRELLA PROF 100H C7', 22.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO ESTRELLA PROF 100H C7', 22.0, 18.7, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO ESTRELLA PROF 100H C7" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 3 disp.</span>
@@ -414,11 +435,11 @@
                     <h3 class="product-title">CUADERNO ESTRELLA PROF 100H C7</h3>
                     <p class="price-text">$22.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('CUADERNO ESTRELLA PROF 100H C7', 22.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('CUADERNO ESTRELLA PROF 100H C7', 22.0, 18.7)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cuaderno profesional  raya star kid estrella 100h" data-name="cuaderno profesional  raya star kid estrella 100h">
+            <div class="card fade-in" data-brand="cuaderno profesional  raya star kid estrella 100h" data-name="cuaderno profesional  raya star kid estrella 100h" data-price="22.0" data-price-wholesale="18.7" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H', 22.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H', 22.0, 18.7, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 33 disp.</span>
@@ -428,11 +449,11 @@
                     <h3 class="product-title">CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H</h3>
                     <p class="price-text">$22.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H', 22.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('CUADERNO PROFESIONAL  RAYA STAR KID ESTRELLA 100H', 22.0, 18.7)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cuaderno estrella apuntes espiral 100 hojas" data-name="cuaderno estrella apuntes espiral 100 hojas">
+            <div class="card fade-in" data-brand="cuaderno estrella apuntes espiral 100 hojas" data-name="cuaderno estrella apuntes espiral 100 hojas" data-price="15.0" data-price-wholesale="12.75" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS', 15.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS', 15.0, 12.75, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 8 disp.</span>
@@ -442,11 +463,11 @@
                     <h3 class="product-title">CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS</h3>
                     <p class="price-text">$15.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('CUADERNO ESTRELLA APUNTES ESPIRAL 100 HOJAS', 15.0, 12.75)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lamina alfabeto" data-name="lamina alfabeto">
+            <div class="card fade-in" data-brand="lamina alfabeto" data-name="lamina alfabeto" data-price="50.0" data-price-wholesale="42.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lamina Alfabeto', 50.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lamina Alfabeto', 50.0, 42.5, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Lamina Alfabeto" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -456,11 +477,11 @@
                     <h3 class="product-title">Lamina Alfabeto</h3>
                     <p class="price-text">$50.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Lamina Alfabeto', 50.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Lamina Alfabeto', 50.0, 42.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="colores de madera jocar 12 piezas" data-name="colores de madera jocar 12 piezas">
+            <div class="card fade-in" data-brand="colores de madera jocar 12 piezas" data-name="colores de madera jocar 12 piezas" data-price="45.0" data-price-wholesale="38.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Colores de madera jocar 12 piezas', 45.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Colores de madera jocar 12 piezas', 45.0, 38.25, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Colores de madera jocar 12 piezas" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -470,11 +491,11 @@
                     <h3 class="product-title">Colores de madera jocar 12 piezas</h3>
                     <p class="price-text">$45.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Colores de madera jocar 12 piezas', 45.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Colores de madera jocar 12 piezas', 45.0, 38.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="regla metálica pascua 50 cm" data-name="regla metálica pascua 50 cm">
+            <div class="card fade-in" data-brand="regla metálica pascua 50 cm" data-name="regla metálica pascua 50 cm" data-price="57.0" data-price-wholesale="48.45" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Regla metálica pascua 50 cm', 57.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Regla metálica pascua 50 cm', 57.0, 48.45, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Regla metálica pascua 50 cm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
@@ -484,11 +505,11 @@
                     <h3 class="product-title">Regla metálica pascua 50 cm</h3>
                     <p class="price-text">$57.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Regla metálica pascua 50 cm', 57.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Regla metálica pascua 50 cm', 57.0, 48.45)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="corrector pascua de 2 ml" data-name="corrector pascua de 2 ml">
+            <div class="card fade-in" data-brand="corrector pascua de 2 ml" data-name="corrector pascua de 2 ml" data-price="10.0" data-price-wholesale="8.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'corrector pascua de 2 ml', 10.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'corrector pascua de 2 ml', 10.0, 8.5, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="corrector pascua de 2 ml" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 11 disp.</span>
@@ -498,11 +519,11 @@
                     <h3 class="product-title">corrector pascua de 2 ml</h3>
                     <p class="price-text">$10.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('corrector pascua de 2 ml', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('corrector pascua de 2 ml', 10.0, 8.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="corrector jumbo liquido brocha de 5 ml" data-name="corrector jumbo liquido brocha de 5 ml">
+            <div class="card fade-in" data-brand="corrector jumbo liquido brocha de 5 ml" data-name="corrector jumbo liquido brocha de 5 ml" data-price="8.0" data-price-wholesale="6.8" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/LTM4cd3.jpeg', 'corrector jumbo liquido brocha de 5 ml', 8.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/LTM4cd3.jpeg', 'corrector jumbo liquido brocha de 5 ml', 8.0, 6.8, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/LTM4cd3.jpeg" alt="corrector jumbo liquido brocha de 5 ml" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
@@ -512,11 +533,11 @@
                     <h3 class="product-title">corrector jumbo liquido brocha de 5 ml</h3>
                     <p class="price-text">$8.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('corrector jumbo liquido brocha de 5 ml', 8.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('corrector jumbo liquido brocha de 5 ml', 8.0, 6.8)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="corrector pascua 2 en 1 pluma y brocha" data-name="corrector pascua 2 en 1 pluma y brocha">
+            <div class="card fade-in" data-brand="corrector pascua 2 en 1 pluma y brocha" data-name="corrector pascua 2 en 1 pluma y brocha" data-price="16.0" data-price-wholesale="13.6" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/A5D427J.jpeg', 'corrector pascua 2 en 1 pluma y brocha', 16.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/A5D427J.jpeg', 'corrector pascua 2 en 1 pluma y brocha', 16.0, 13.6, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/A5D427J.jpeg" alt="corrector pascua 2 en 1 pluma y brocha" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
@@ -526,11 +547,11 @@
                     <h3 class="product-title">corrector pascua 2 en 1 pluma y brocha</h3>
                     <p class="price-text">$16.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('corrector pascua 2 en 1 pluma y brocha', 16.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('corrector pascua 2 en 1 pluma y brocha', 16.0, 13.6)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="papel tamaño carta hus" data-name="papel tamaño carta hus">
+            <div class="card fade-in" data-brand="papel tamaño carta hus" data-name="papel tamaño carta hus" data-price="0.33" data-price-wholesale="0.28" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'papel tamaño carta hus', 0.33, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'papel tamaño carta hus', 0.33, 0.28, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="papel tamaño carta hus" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 500 disp.</span>
@@ -540,11 +561,11 @@
                     <h3 class="product-title">papel tamaño carta hus</h3>
                     <p class="price-text">$0.33</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('papel tamaño carta hus', 0.33)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('papel tamaño carta hus', 0.33, 0.28)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="goma dixon bs 30" data-name="goma dixon bs 30">
+            <div class="card fade-in" data-brand="goma dixon bs 30" data-name="goma dixon bs 30" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Goma Dixon bs 30', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Goma Dixon bs 30', 6.0, 5.1, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Goma Dixon bs 30" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 18 disp.</span>
@@ -554,11 +575,11 @@
                     <h3 class="product-title">Goma Dixon bs 30</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Goma Dixon bs 30', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Goma Dixon bs 30', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="silicon en barra  devek delgada pieza" data-name="silicon en barra  devek delgada pieza">
+            <div class="card fade-in" data-brand="silicon en barra  devek delgada pieza" data-name="silicon en barra  devek delgada pieza" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Silicon en barra  Devek delgada PIEZA', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Silicon en barra  Devek delgada PIEZA', 3.0, 2.55, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Silicon en barra  Devek delgada PIEZA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 98 disp.</span>
@@ -568,11 +589,11 @@
                     <h3 class="product-title">Silicon en barra  Devek delgada PIEZA</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Silicon en barra  Devek delgada PIEZA', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Silicon en barra  Devek delgada PIEZA', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta azul rey" data-name="foamy diamantado tamaño carta azul rey">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta azul rey" data-name="foamy diamantado tamaño carta azul rey" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta Azul Rey', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta Azul Rey', 6.0, 5.1, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta Azul Rey" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -582,11 +603,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta Azul Rey</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta Azul Rey', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta Azul Rey', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color plata" data-name="foamy diamantado tamaño carta color plata">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color plata" data-name="foamy diamantado tamaño carta color plata" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Plata', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Plata', 6.0, 5.1, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Plata" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -596,11 +617,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Plata</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Plata', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Plata', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color gris" data-name="foamy diamantado tamaño carta color gris">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color gris" data-name="foamy diamantado tamaño carta color gris" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Gris', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Gris', 6.0, 5.1, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Gris" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -610,11 +631,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Gris</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Gris', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Gris', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color cafe" data-name="foamy diamantado tamaño carta color cafe">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color cafe" data-name="foamy diamantado tamaño carta color cafe" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Cafe', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Cafe', 6.0, 5.1, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Cafe" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -624,11 +645,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Cafe</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Cafe', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Cafe', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rojo" data-name="foamy diamantado tamaño carta color rojo">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rojo" data-name="foamy diamantado tamaño carta color rojo" data-price="10.0" data-price-wholesale="8.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rojo', 10.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rojo', 10.0, 8.5, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Rojo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -638,11 +659,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Rojo</h3>
                     <p class="price-text">$10.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rojo', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rojo', 10.0, 8.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rosa pastel" data-name="foamy diamantado tamaño carta color rosa pastel">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rosa pastel" data-name="foamy diamantado tamaño carta color rosa pastel" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rosa Pastel', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rosa Pastel', 6.0, 5.1, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Rosa Pastel" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -652,11 +673,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Rosa Pastel</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rosa Pastel', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rosa Pastel', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color amarillo" data-name="foamy diamantado tamaño carta color amarillo">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color amarillo" data-name="foamy diamantado tamaño carta color amarillo" data-price="10.0" data-price-wholesale="8.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Amarillo', 10.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Amarillo', 10.0, 8.5, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Amarillo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -666,11 +687,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Amarillo</h3>
                     <p class="price-text">$10.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Amarillo', 10.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Amarillo', 10.0, 8.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color blanco" data-name="foamy diamantado tamaño carta color blanco">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color blanco" data-name="foamy diamantado tamaño carta color blanco" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Blanco', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Blanco', 6.0, 5.1, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Blanco" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -680,11 +701,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Blanco</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Blanco', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Blanco', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color oro" data-name="foamy diamantado tamaño carta color oro">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color oro" data-name="foamy diamantado tamaño carta color oro" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color oro', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color oro', 6.0, 5.1, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color oro" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -694,11 +715,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color oro</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color oro', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color oro', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color verde bandera irisado" data-name="foamy diamantado tamaño carta color verde bandera irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color verde bandera irisado" data-name="foamy diamantado tamaño carta color verde bandera irisado" data-price="9.0" data-price-wholesale="7.65" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color verde bandera irisado', 9.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color verde bandera irisado', 9.0, 7.65, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color verde bandera irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -708,11 +729,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color verde bandera irisado</h3>
                     <p class="price-text">$9.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color verde bandera irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color verde bandera irisado', 9.0, 7.65)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color azul pastel irisado" data-name="foamy diamantado tamaño carta color azul pastel irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color azul pastel irisado" data-name="foamy diamantado tamaño carta color azul pastel irisado" data-price="9.0" data-price-wholesale="7.65" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Azul Pastel irisado', 9.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Azul Pastel irisado', 9.0, 7.65, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Azul Pastel irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -722,11 +743,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Azul Pastel irisado</h3>
                     <p class="price-text">$9.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Azul Pastel irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Azul Pastel irisado', 9.0, 7.65)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color fucsia  irisado" data-name="foamy diamantado tamaño carta color fucsia  irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color fucsia  irisado" data-name="foamy diamantado tamaño carta color fucsia  irisado" data-price="9.0" data-price-wholesale="7.65" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Fucsia  irisado', 9.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Fucsia  irisado', 9.0, 7.65, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Fucsia  irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -736,11 +757,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Fucsia  irisado</h3>
                     <p class="price-text">$9.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Fucsia  irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Fucsia  irisado', 9.0, 7.65)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color naranja  irisado" data-name="foamy diamantado tamaño carta color naranja  irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color naranja  irisado" data-name="foamy diamantado tamaño carta color naranja  irisado" data-price="9.0" data-price-wholesale="7.65" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Naranja  irisado', 9.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Naranja  irisado', 9.0, 7.65, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Naranja  irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -750,11 +771,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Naranja  irisado</h3>
                     <p class="price-text">$9.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Naranja  irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Naranja  irisado', 9.0, 7.65)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rosa pastel  irisado" data-name="foamy diamantado tamaño carta color rosa pastel  irisado">
+            <div class="card fade-in" data-brand="foamy diamantado tamaño carta color rosa pastel  irisado" data-name="foamy diamantado tamaño carta color rosa pastel  irisado" data-price="9.0" data-price-wholesale="7.65" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rosa Pastel  irisado', 9.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado tamaño carta color Rosa Pastel  irisado', 9.0, 7.65, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado tamaño carta color Rosa Pastel  irisado" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -764,11 +785,11 @@
                     <h3 class="product-title">Foamy diamantado tamaño carta color Rosa Pastel  irisado</h3>
                     <p class="price-text">$9.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rosa Pastel  irisado', 9.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado tamaño carta color Rosa Pastel  irisado', 9.0, 7.65)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy liso tamaño carta color verde bandera" data-name="foamy liso tamaño carta color verde bandera">
+            <div class="card fade-in" data-brand="foamy liso tamaño carta color verde bandera" data-name="foamy liso tamaño carta color verde bandera" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy liso tamaño carta color verde bandera', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy liso tamaño carta color verde bandera', 3.0, 2.55, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy liso tamaño carta color verde bandera" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -778,11 +799,11 @@
                     <h3 class="product-title">Foamy liso tamaño carta color verde bandera</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy liso tamaño carta color verde bandera', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy liso tamaño carta color verde bandera', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy liso tamaño carta color azul cielo" data-name="foamy liso tamaño carta color azul cielo">
+            <div class="card fade-in" data-brand="foamy liso tamaño carta color azul cielo" data-name="foamy liso tamaño carta color azul cielo" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy liso tamaño carta color azul cielo', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy liso tamaño carta color azul cielo', 3.0, 2.55, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy liso tamaño carta color azul cielo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -792,11 +813,11 @@
                     <h3 class="product-title">Foamy liso tamaño carta color azul cielo</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy liso tamaño carta color azul cielo', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy liso tamaño carta color azul cielo', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="foamy diamantado color verde bandera" data-name="foamy diamantado color verde bandera">
+            <div class="card fade-in" data-brand="foamy diamantado color verde bandera" data-name="foamy diamantado color verde bandera" data-price="4.0" data-price-wholesale="3.4" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado color verde bandera', 4.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Foamy diamantado color verde bandera', 4.0, 3.4, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Foamy diamantado color verde bandera" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 60 disp.</span>
@@ -806,11 +827,11 @@
                     <h3 class="product-title">Foamy diamantado color verde bandera</h3>
                     <p class="price-text">$4.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Foamy diamantado color verde bandera', 4.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Foamy diamantado color verde bandera', 4.0, 3.4)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cordon para gafete  de macramé azul marino" data-name="cordon para gafete  de macramé azul marino">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé azul marino" data-name="cordon para gafete  de macramé azul marino" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé azul marino', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé azul marino', 3.0, 2.55, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé azul marino" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -820,11 +841,11 @@
                     <h3 class="product-title">cordon para gafete  de macramé azul marino</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé azul marino', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé azul marino', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 2.55, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -834,11 +855,11 @@
                     <h3 class="product-title">cordon para gafete  de macramé amarillo cana</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 2.55, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -848,11 +869,11 @@
                     <h3 class="product-title">cordon para gafete  de macramé amarillo cana</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 2.55, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -862,11 +883,11 @@
                     <h3 class="product-title">cordon para gafete  de macramé amarillo cana</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 2.55, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -876,11 +897,11 @@
                     <h3 class="product-title">cordon para gafete  de macramé amarillo cana</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana">
+            <div class="card fade-in" data-brand="cordon para gafete  de macramé amarillo cana" data-name="cordon para gafete  de macramé amarillo cana" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cordon para gafete  de macramé amarillo cana', 3.0, 2.55, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cordon para gafete  de macramé amarillo cana" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -890,11 +911,11 @@
                     <h3 class="product-title">cordon para gafete  de macramé amarillo cana</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cordon para gafete  de macramé amarillo cana', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="broche para archivo jumbo pieza" data-name="broche para archivo jumbo pieza">
+            <div class="card fade-in" data-brand="broche para archivo jumbo pieza" data-name="broche para archivo jumbo pieza" data-price="1.5" data-price-wholesale="1.27" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Broche para archivo jumbo PIEZA', 1.5, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Broche para archivo jumbo PIEZA', 1.5, 1.27, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Broche para archivo jumbo PIEZA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 100 disp.</span>
@@ -904,11 +925,11 @@
                     <h3 class="product-title">Broche para archivo jumbo PIEZA</h3>
                     <p class="price-text">$1.50</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Broche para archivo jumbo PIEZA', 1.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Broche para archivo jumbo PIEZA', 1.5, 1.27)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cúter retráctil grueso uso pesado con guía" data-name="cúter retráctil grueso uso pesado con guía">
+            <div class="card fade-in" data-brand="cúter retráctil grueso uso pesado con guía" data-name="cúter retráctil grueso uso pesado con guía" data-price="40.0" data-price-wholesale="34.0" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/OZfUZoL.jpeg', 'Cúter Retráctil Grueso Uso Pesado con Guía', 40.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/OZfUZoL.jpeg', 'Cúter Retráctil Grueso Uso Pesado con Guía', 40.0, 34.0, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/OZfUZoL.jpeg" alt="Cúter Retráctil Grueso Uso Pesado con Guía" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
@@ -918,11 +939,11 @@
                     <h3 class="product-title">Cúter Retráctil Grueso Uso Pesado con Guía</h3>
                     <p class="price-text">$40.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Cúter Retráctil Grueso Uso Pesado con Guía', 40.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Cúter Retráctil Grueso Uso Pesado con Guía', 40.0, 34.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cúter retráctil delgado de plástico para uso ligero sin guía" data-name="cúter retráctil delgado de plástico para uso ligero sin guía">
+            <div class="card fade-in" data-brand="cúter retráctil delgado de plástico para uso ligero sin guía" data-name="cúter retráctil delgado de plástico para uso ligero sin guía" data-price="11.0" data-price-wholesale="9.35" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/ukg1kEa.jpeg', 'Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía', 11.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/ukg1kEa.jpeg', 'Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía', 11.0, 9.35, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/ukg1kEa.jpeg" alt="Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 8 disp.</span>
@@ -932,11 +953,11 @@
                     <h3 class="product-title">Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía</h3>
                     <p class="price-text">$11.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía', 11.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Cúter Retráctil Delgado de Plástico para uso Ligero sin Guía', 11.0, 9.35)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="tijera escolar punta roma delta mod. al100" data-name="tijera escolar punta roma delta mod. al100">
+            <div class="card fade-in" data-brand="tijera escolar punta roma delta mod. al100" data-name="tijera escolar punta roma delta mod. al100" data-price="14.0" data-price-wholesale="11.9" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Tijera Escolar Punta Roma Delta Mod. AL100', 14.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Tijera Escolar Punta Roma Delta Mod. AL100', 14.0, 11.9, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Tijera Escolar Punta Roma Delta Mod. AL100" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
@@ -946,11 +967,11 @@
                     <h3 class="product-title">Tijera Escolar Punta Roma Delta Mod. AL100</h3>
                     <p class="price-text">$14.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Tijera Escolar Punta Roma Delta Mod. AL100', 14.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Tijera Escolar Punta Roma Delta Mod. AL100', 14.0, 11.9)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="tijera escolar punta roma tij-es001" data-name="tijera escolar punta roma tij-es001">
+            <div class="card fade-in" data-brand="tijera escolar punta roma tij-es001" data-name="tijera escolar punta roma tij-es001" data-price="15.0" data-price-wholesale="12.75" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Tijera escolar punta roma TIJ-ES001', 15.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Tijera escolar punta roma TIJ-ES001', 15.0, 12.75, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Tijera escolar punta roma TIJ-ES001" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
@@ -960,11 +981,11 @@
                     <h3 class="product-title">Tijera escolar punta roma TIJ-ES001</h3>
                     <p class="price-text">$15.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Tijera escolar punta roma TIJ-ES001', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Tijera escolar punta roma TIJ-ES001', 15.0, 12.75)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="crayones escrimex jumbo c/12 pzas" data-name="crayones escrimex jumbo c/12 pzas">
+            <div class="card fade-in" data-brand="crayones escrimex jumbo c/12 pzas" data-name="crayones escrimex jumbo c/12 pzas" data-price="25.0" data-price-wholesale="21.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Crayones Escrimex Jumbo C/12 PZAS', 25.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Crayones Escrimex Jumbo C/12 PZAS', 25.0, 21.25, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Crayones Escrimex Jumbo C/12 PZAS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
@@ -974,11 +995,11 @@
                     <h3 class="product-title">Crayones Escrimex Jumbo C/12 PZAS</h3>
                     <p class="price-text">$25.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Crayones Escrimex Jumbo C/12 PZAS', 25.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Crayones Escrimex Jumbo C/12 PZAS', 25.0, 21.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="acta de nacimiento" data-name="acta de nacimiento">
+            <div class="card fade-in" data-brand="acta de nacimiento" data-name="acta de nacimiento" data-price="100.0" data-price-wholesale="85.0" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Acta de nacimiento', 100.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Acta de nacimiento', 100.0, 85.0, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Acta de nacimiento" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
@@ -988,11 +1009,11 @@
                     <h3 class="product-title">Acta de nacimiento</h3>
                     <p class="price-text">$100.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Acta de nacimiento', 100.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Acta de nacimiento', 100.0, 85.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="rfc" data-name="rfc">
+            <div class="card fade-in" data-brand="rfc" data-name="rfc" data-price="180.0" data-price-wholesale="153.0" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'RFC', 180.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'RFC', 180.0, 153.0, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="RFC" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
@@ -1002,11 +1023,11 @@
                     <h3 class="product-title">RFC</h3>
                     <p class="price-text">$180.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('RFC', 180.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('RFC', 180.0, 153.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="numero de seguro social" data-name="numero de seguro social">
+            <div class="card fade-in" data-brand="numero de seguro social" data-name="numero de seguro social" data-price="50.0" data-price-wholesale="42.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Numero de Seguro Social', 50.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Numero de Seguro Social', 50.0, 42.5, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Numero de Seguro Social" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 18 disp.</span>
@@ -1016,11 +1037,11 @@
                     <h3 class="product-title">Numero de Seguro Social</h3>
                     <p class="price-text">$50.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Numero de Seguro Social', 50.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Numero de Seguro Social', 50.0, 42.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="constancia de no derecho inhabilitacion imss" data-name="constancia de no derecho inhabilitacion imss">
+            <div class="card fade-in" data-brand="constancia de no derecho inhabilitacion imss" data-name="constancia de no derecho inhabilitacion imss" data-price="140.0" data-price-wholesale="119.0" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Constancia de no derecho inhabilitacion imss', 140.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Constancia de no derecho inhabilitacion imss', 140.0, 119.0, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Constancia de no derecho inhabilitacion imss" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
@@ -1030,11 +1051,11 @@
                     <h3 class="product-title">Constancia de no derecho inhabilitacion imss</h3>
                     <p class="price-text">$140.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Constancia de no derecho inhabilitacion imss', 140.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Constancia de no derecho inhabilitacion imss', 140.0, 119.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="antecedentes  no penales" data-name="antecedentes  no penales">
+            <div class="card fade-in" data-brand="antecedentes  no penales" data-name="antecedentes  no penales" data-price="320.0" data-price-wholesale="272.0" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Antecedentes  no Penales', 320.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Antecedentes  no Penales', 320.0, 272.0, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Antecedentes  no Penales" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
@@ -1044,11 +1065,11 @@
                     <h3 class="product-title">Antecedentes  no Penales</h3>
                     <p class="price-text">$320.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Antecedentes  no Penales', 320.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Antecedentes  no Penales', 320.0, 272.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="recibo de luz" data-name="recibo de luz">
+            <div class="card fade-in" data-brand="recibo de luz" data-name="recibo de luz" data-price="15.0" data-price-wholesale="12.75" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Recibo de luz', 15.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Recibo de luz', 15.0, 12.75, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Recibo de luz" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 19 disp.</span>
@@ -1058,11 +1079,11 @@
                     <h3 class="product-title">Recibo de luz</h3>
                     <p class="price-text">$15.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Recibo de luz', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Recibo de luz', 15.0, 12.75)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lapiz de grafito triangular shely pieza" data-name="lapiz de grafito triangular shely pieza">
+            <div class="card fade-in" data-brand="lapiz de grafito triangular shely pieza" data-name="lapiz de grafito triangular shely pieza" data-price="7.0" data-price-wholesale="5.95" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapiz de grafito triangular Shely Pieza', 7.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapiz de grafito triangular Shely Pieza', 7.0, 5.95, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="lapiz de grafito triangular Shely Pieza" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 8 disp.</span>
@@ -1072,11 +1093,11 @@
                     <h3 class="product-title">lapiz de grafito triangular Shely Pieza</h3>
                     <p class="price-text">$7.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('lapiz de grafito triangular Shely Pieza', 7.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('lapiz de grafito triangular Shely Pieza', 7.0, 5.95)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lapiz de grafito metalicos pieza" data-name="lapiz de grafito metalicos pieza">
+            <div class="card fade-in" data-brand="lapiz de grafito metalicos pieza" data-name="lapiz de grafito metalicos pieza" data-price="7.0" data-price-wholesale="5.95" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lapiz de grafito metalicos Pieza', 7.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Lapiz de grafito metalicos Pieza', 7.0, 5.95, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Lapiz de grafito metalicos Pieza" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
@@ -1086,11 +1107,11 @@
                     <h3 class="product-title">Lapiz de grafito metalicos Pieza</h3>
                     <p class="price-text">$7.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Lapiz de grafito metalicos Pieza', 7.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Lapiz de grafito metalicos Pieza', 7.0, 5.95)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="folder tamaño oficio color crema" data-name="folder tamaño oficio color crema">
+            <div class="card fade-in" data-brand="folder tamaño oficio color crema" data-name="folder tamaño oficio color crema" data-price="5.0" data-price-wholesale="4.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Folder tamaño oficio color crema', 5.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Folder tamaño oficio color crema', 5.0, 4.25, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Folder tamaño oficio color crema" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
@@ -1100,11 +1121,11 @@
                     <h3 class="product-title">Folder tamaño oficio color crema</h3>
                     <p class="price-text">$5.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Folder tamaño oficio color crema', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Folder tamaño oficio color crema', 5.0, 4.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lapicero shely gel colores diamantados  pieza" data-name="lapicero shely gel colores diamantados  pieza">
+            <div class="card fade-in" data-brand="lapicero shely gel colores diamantados  pieza" data-name="lapicero shely gel colores diamantados  pieza" data-price="8.0" data-price-wholesale="6.8" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA', 8.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA', 8.0, 6.8, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
@@ -1114,11 +1135,11 @@
                     <h3 class="product-title">LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA</h3>
                     <p class="price-text">$8.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA', 8.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('LAPICERO SHELY GEL COLORES DIAMANTADOS  PIEZA', 8.0, 6.8)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="pin point negra fino boligrafo azor 7mm" data-name="pin point negra fino boligrafo azor 7mm">
+            <div class="card fade-in" data-brand="pin point negra fino boligrafo azor 7mm" data-name="pin point negra fino boligrafo azor 7mm" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/ulF27cr.jpeg', 'PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/ulF27cr.jpeg', 'PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM', 6.0, 5.1, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://i.imgur.com/ulF27cr.jpeg" alt="PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 11 disp.</span>
@@ -1128,11 +1149,11 @@
                     <h3 class="product-title">PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('PIN POINT NEGRA FINO BOLIGRAFO AZOR 7MM', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="pin point azul fino boligrafo azor 7mm" data-name="pin point azul fino boligrafo azor 7mm">
+            <div class="card fade-in" data-brand="pin point azul fino boligrafo azor 7mm" data-name="pin point azul fino boligrafo azor 7mm" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/MtSKk2z.jpeg', 'PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/MtSKk2z.jpeg', 'PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM', 6.0, 5.1, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/MtSKk2z.jpeg" alt="PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
@@ -1142,11 +1163,11 @@
                     <h3 class="product-title">PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('PIN POINT AZUL FINO BOLIGRAFO AZOR 7MM', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lapicero de tinta uni-ball color negro" data-name="lapicero de tinta uni-ball color negro">
+            <div class="card fade-in" data-brand="lapicero de tinta uni-ball color negro" data-name="lapicero de tinta uni-ball color negro" data-price="44.0" data-price-wholesale="37.4" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapicero de tinta uni-ball color negro', 44.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapicero de tinta uni-ball color negro', 44.0, 37.4, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="lapicero de tinta uni-ball color negro" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
@@ -1156,11 +1177,11 @@
                     <h3 class="product-title">lapicero de tinta uni-ball color negro</h3>
                     <p class="price-text">$44.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('lapicero de tinta uni-ball color negro', 44.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('lapicero de tinta uni-ball color negro', 44.0, 37.4)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lapicero de tinta uni-super ink deluxe fine tinta negra" data-name="lapicero de tinta uni-super ink deluxe fine tinta negra">
+            <div class="card fade-in" data-brand="lapicero de tinta uni-super ink deluxe fine tinta negra" data-name="lapicero de tinta uni-super ink deluxe fine tinta negra" data-price="62.0" data-price-wholesale="52.7" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapicero de tinta uni-super ink deluxe fine tinta negra', 62.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'lapicero de tinta uni-super ink deluxe fine tinta negra', 62.0, 52.7, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="lapicero de tinta uni-super ink deluxe fine tinta negra" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
@@ -1170,11 +1191,11 @@
                     <h3 class="product-title">lapicero de tinta uni-super ink deluxe fine tinta negra</h3>
                     <p class="price-text">$62.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('lapicero de tinta uni-super ink deluxe fine tinta negra', 62.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('lapicero de tinta uni-super ink deluxe fine tinta negra', 62.0, 52.7)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cinta adhesiva devek 12 mm x 33 mt transparente" data-name="cinta adhesiva devek 12 mm x 33 mt transparente">
+            <div class="card fade-in" data-brand="cinta adhesiva devek 12 mm x 33 mt transparente" data-name="cinta adhesiva devek 12 mm x 33 mt transparente" data-price="8.0" data-price-wholesale="6.8" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta adhesiva devek 12 mm x 33 mt transparente', 8.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta adhesiva devek 12 mm x 33 mt transparente', 8.0, 6.8, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cinta adhesiva devek 12 mm x 33 mt transparente" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
@@ -1184,11 +1205,11 @@
                     <h3 class="product-title">cinta adhesiva devek 12 mm x 33 mt transparente</h3>
                     <p class="price-text">$8.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cinta adhesiva devek 12 mm x 33 mt transparente', 8.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cinta adhesiva devek 12 mm x 33 mt transparente', 8.0, 6.8)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cinta de empaque transparente 48 mm x 50 mm" data-name="cinta de empaque transparente 48 mm x 50 mm">
+            <div class="card fade-in" data-brand="cinta de empaque transparente 48 mm x 50 mm" data-name="cinta de empaque transparente 48 mm x 50 mm" data-price="19.0" data-price-wholesale="16.15" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta de empaque transparente 48 mm X 50 mm', 19.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta de empaque transparente 48 mm X 50 mm', 19.0, 16.15, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cinta de empaque transparente 48 mm X 50 mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
@@ -1198,11 +1219,11 @@
                     <h3 class="product-title">cinta de empaque transparente 48 mm X 50 mm</h3>
                     <p class="price-text">$19.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cinta de empaque transparente 48 mm X 50 mm', 19.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cinta de empaque transparente 48 mm X 50 mm', 19.0, 16.15)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cinta de empaque transparente 48 mm x 150 mm" data-name="cinta de empaque transparente 48 mm x 150 mm">
+            <div class="card fade-in" data-brand="cinta de empaque transparente 48 mm x 150 mm" data-name="cinta de empaque transparente 48 mm x 150 mm" data-price="42.0" data-price-wholesale="35.7" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta de empaque transparente 48 mm X 150 mm', 42.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'cinta de empaque transparente 48 mm X 150 mm', 42.0, 35.7, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="cinta de empaque transparente 48 mm X 150 mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
@@ -1212,11 +1233,11 @@
                     <h3 class="product-title">cinta de empaque transparente 48 mm X 150 mm</h3>
                     <p class="price-text">$42.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cinta de empaque transparente 48 mm X 150 mm', 42.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cinta de empaque transparente 48 mm X 150 mm', 42.0, 35.7)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 amarillos" data-name="cartulina bristol 50 x 65 amarillos">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 amarillos" data-name="cartulina bristol 50 x 65 amarillos" data-price="5.0" data-price-wholesale="4.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/JFmJcUV.jpeg', 'cartulina Bristol 50 X 65 AMARILLOS', 5.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/JFmJcUV.jpeg', 'cartulina Bristol 50 X 65 AMARILLOS', 5.0, 4.25, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/JFmJcUV.jpeg" alt="cartulina Bristol 50 X 65 AMARILLOS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4 disp.</span>
@@ -1226,11 +1247,11 @@
                     <h3 class="product-title">cartulina Bristol 50 X 65 AMARILLOS</h3>
                     <p class="price-text">$5.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('cartulina Bristol 50 X 65 AMARILLOS', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('cartulina Bristol 50 X 65 AMARILLOS', 5.0, 4.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 blanca" data-name="cartulina bristol 50 x 65 blanca">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 blanca" data-name="cartulina bristol 50 x 65 blanca" data-price="5.0" data-price-wholesale="4.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/3CWl5eP.jpeg', 'Cartulina Bristol 50 X 65 BLANCA', 5.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/3CWl5eP.jpeg', 'Cartulina Bristol 50 X 65 BLANCA', 5.0, 4.25, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/3CWl5eP.jpeg" alt="Cartulina Bristol 50 X 65 BLANCA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
@@ -1240,11 +1261,11 @@
                     <h3 class="product-title">Cartulina Bristol 50 X 65 BLANCA</h3>
                     <p class="price-text">$5.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 BLANCA', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 BLANCA', 5.0, 4.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 azul" data-name="cartulina bristol 50 x 65 azul">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 azul" data-name="cartulina bristol 50 x 65 azul" data-price="5.0" data-price-wholesale="4.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/J6Rr2KD.jpeg', 'Cartulina Bristol 50 X 65 AZUL', 5.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/J6Rr2KD.jpeg', 'Cartulina Bristol 50 X 65 AZUL', 5.0, 4.25, 'PAPELERIA')">
                         
                         <img src="https://i.imgur.com/J6Rr2KD.jpeg" alt="Cartulina Bristol 50 X 65 AZUL" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
@@ -1254,11 +1275,11 @@
                     <h3 class="product-title">Cartulina Bristol 50 X 65 AZUL</h3>
                     <p class="price-text">$5.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 AZUL', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 AZUL', 5.0, 4.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 verde" data-name="cartulina bristol 50 x 65 verde">
+            <div class="card fade-in" data-brand="cartulina bristol 50 x 65 verde" data-name="cartulina bristol 50 x 65 verde" data-price="5.0" data-price-wholesale="4.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/qnXXwCM.jpeg', 'Cartulina Bristol 50 X 65 VERDE', 5.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://i.imgur.com/qnXXwCM.jpeg', 'Cartulina Bristol 50 X 65 VERDE', 5.0, 4.25, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://i.imgur.com/qnXXwCM.jpeg" alt="Cartulina Bristol 50 X 65 VERDE" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -1268,11 +1289,11 @@
                     <h3 class="product-title">Cartulina Bristol 50 X 65 VERDE</h3>
                     <p class="price-text">$5.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 VERDE', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Cartulina Bristol 50 X 65 VERDE', 5.0, 4.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lapiz maped hb 851759 piezas" data-name="lapiz maped hb 851759 piezas">
+            <div class="card fade-in" data-brand="lapiz maped hb 851759 piezas" data-name="lapiz maped hb 851759 piezas" data-price="6.0" data-price-wholesale="5.1" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPIZ MAPED HB 851759 piezas', 6.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPIZ MAPED HB 851759 piezas', 6.0, 5.1, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="LAPIZ MAPED HB 851759 piezas" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
@@ -1282,11 +1303,11 @@
                     <h3 class="product-title">LAPIZ MAPED HB 851759 piezas</h3>
                     <p class="price-text">$6.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('LAPIZ MAPED HB 851759 piezas', 6.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('LAPIZ MAPED HB 851759 piezas', 6.0, 5.1)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="lapices de colores jocar madera 12 piezas" data-name="lapices de colores jocar madera 12 piezas">
+            <div class="card fade-in" data-brand="lapices de colores jocar madera 12 piezas" data-name="lapices de colores jocar madera 12 piezas" data-price="35.0" data-price-wholesale="29.75" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPICES DE COLORES JOCAR MADERA 12 PIEZAS', 35.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'LAPICES DE COLORES JOCAR MADERA 12 PIEZAS', 35.0, 29.75, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="LAPICES DE COLORES JOCAR MADERA 12 PIEZAS" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 1 disp.</span>
@@ -1296,11 +1317,11 @@
                     <h3 class="product-title">LAPICES DE COLORES JOCAR MADERA 12 PIEZAS</h3>
                     <p class="price-text">$35.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('LAPICES DE COLORES JOCAR MADERA 12 PIEZAS', 35.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('LAPICES DE COLORES JOCAR MADERA 12 PIEZAS', 35.0, 29.75)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="marcador permanente escrimex punta cincel negro" data-name="marcador permanente escrimex punta cincel negro">
+            <div class="card fade-in" data-brand="marcador permanente escrimex punta cincel negro" data-name="marcador permanente escrimex punta cincel negro" data-price="13.0" data-price-wholesale="11.05" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Marcador Permanente Escrimex Punta Cincel Negro', 13.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Marcador Permanente Escrimex Punta Cincel Negro', 13.0, 11.05, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Marcador Permanente Escrimex Punta Cincel Negro" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 12 disp.</span>
@@ -1310,11 +1331,11 @@
                     <h3 class="product-title">Marcador Permanente Escrimex Punta Cincel Negro</h3>
                     <p class="price-text">$13.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Marcador Permanente Escrimex Punta Cincel Negro', 13.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Marcador Permanente Escrimex Punta Cincel Negro', 13.0, 11.05)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="marcador permanente pascua punta fina negro" data-name="marcador permanente pascua punta fina negro">
+            <div class="card fade-in" data-brand="marcador permanente pascua punta fina negro" data-name="marcador permanente pascua punta fina negro" data-price="16.5" data-price-wholesale="14.03" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente pascua punta fina NEGRO', 16.5, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente pascua punta fina NEGRO', 16.5, 14.03, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="marcador permanente pascua punta fina NEGRO" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 6 disp.</span>
@@ -1324,11 +1345,11 @@
                     <h3 class="product-title">marcador permanente pascua punta fina NEGRO</h3>
                     <p class="price-text">$16.50</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('marcador permanente pascua punta fina NEGRO', 16.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('marcador permanente pascua punta fina NEGRO', 16.5, 14.03)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="marcador permanente punta fina azul pascua" data-name="marcador permanente punta fina azul pascua">
+            <div class="card fade-in" data-brand="marcador permanente punta fina azul pascua" data-name="marcador permanente punta fina azul pascua" data-price="16.5" data-price-wholesale="14.03" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente punta fina AZUL PASCUA', 16.5, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente punta fina AZUL PASCUA', 16.5, 14.03, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="marcador permanente punta fina AZUL PASCUA" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 10 disp.</span>
@@ -1338,11 +1359,11 @@
                     <h3 class="product-title">marcador permanente punta fina AZUL PASCUA</h3>
                     <p class="price-text">$16.50</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('marcador permanente punta fina AZUL PASCUA', 16.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('marcador permanente punta fina AZUL PASCUA', 16.5, 14.03)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="marcador permanente esterbrook negro sharpie" data-name="marcador permanente esterbrook negro sharpie">
+            <div class="card fade-in" data-brand="marcador permanente esterbrook negro sharpie" data-name="marcador permanente esterbrook negro sharpie" data-price="48.0" data-price-wholesale="40.8" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE', 48.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE', 48.0, 40.8, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 0 disp.</span>
@@ -1352,11 +1373,11 @@
                     <h3 class="product-title">MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE</h3>
                     <p class="price-text">$48.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE', 48.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('MARCADOR PERMANENTE ESTERBROOK NEGRO SHARPIE', 48.0, 40.8)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="marcador permanente color rojo" data-name="marcador permanente color rojo">
+            <div class="card fade-in" data-brand="marcador permanente color rojo" data-name="marcador permanente color rojo" data-price="13.0" data-price-wholesale="11.05" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente color rojo', 13.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'marcador permanente color rojo', 13.0, 11.05, 'PAPELERIA')">
                         <div class="promo-badge badge-nuevo">¡NUEVO!</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="marcador permanente color rojo" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 2 disp.</span>
@@ -1366,11 +1387,11 @@
                     <h3 class="product-title">marcador permanente color rojo</h3>
                     <p class="price-text">$13.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('marcador permanente color rojo', 13.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('marcador permanente color rojo', 13.0, 11.05)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="porta gafete sinotec horizontal 85 x 105 mm" data-name="porta gafete sinotec horizontal 85 x 105 mm">
+            <div class="card fade-in" data-brand="porta gafete sinotec horizontal 85 x 105 mm" data-name="porta gafete sinotec horizontal 85 x 105 mm" data-price="5.0" data-price-wholesale="4.25" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Porta gafete sinotec horizontal 85 X 105 mm', 5.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Porta gafete sinotec horizontal 85 X 105 mm', 5.0, 4.25, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Porta gafete sinotec horizontal 85 X 105 mm" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 20 disp.</span>
@@ -1380,11 +1401,11 @@
                     <h3 class="product-title">Porta gafete sinotec horizontal 85 X 105 mm</h3>
                     <p class="price-text">$5.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Porta gafete sinotec horizontal 85 X 105 mm', 5.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Porta gafete sinotec horizontal 85 X 105 mm', 5.0, 4.25)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="sacapunta jocar surtido" data-name="sacapunta jocar surtido">
+            <div class="card fade-in" data-brand="sacapunta jocar surtido" data-name="sacapunta jocar surtido" data-price="3.0" data-price-wholesale="2.55" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Sacapunta Jocar surtido', 3.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Sacapunta Jocar surtido', 3.0, 2.55, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Sacapunta Jocar surtido" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 150 disp.</span>
@@ -1394,11 +1415,11 @@
                     <h3 class="product-title">Sacapunta Jocar surtido</h3>
                     <p class="price-text">$3.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Sacapunta Jocar surtido', 3.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Sacapunta Jocar surtido', 3.0, 2.55)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="sacapunta jocar con deposito y goma" data-name="sacapunta jocar con deposito y goma">
+            <div class="card fade-in" data-brand="sacapunta jocar con deposito y goma" data-name="sacapunta jocar con deposito y goma" data-price="15.0" data-price-wholesale="12.75" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Sacapunta Jocar con deposito y goma', 15.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Sacapunta Jocar con deposito y goma', 15.0, 12.75, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Sacapunta Jocar con deposito y goma" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 24 disp.</span>
@@ -1408,11 +1429,11 @@
                     <h3 class="product-title">Sacapunta Jocar con deposito y goma</h3>
                     <p class="price-text">$15.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Sacapunta Jocar con deposito y goma', 15.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Sacapunta Jocar con deposito y goma', 15.0, 12.75)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="libreta profesional de raya sazz 100 hojas" data-name="libreta profesional de raya sazz 100 hojas">
+            <div class="card fade-in" data-brand="libreta profesional de raya sazz 100 hojas" data-name="libreta profesional de raya sazz 100 hojas" data-price="30.0" data-price-wholesale="25.5" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Libreta profesional de raya sazz 100 hojas', 30.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Libreta profesional de raya sazz 100 hojas', 30.0, 25.5, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Libreta profesional de raya sazz 100 hojas" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -1422,11 +1443,11 @@
                     <h3 class="product-title">Libreta profesional de raya sazz 100 hojas</h3>
                     <p class="price-text">$30.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Libreta profesional de raya sazz 100 hojas', 30.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Libreta profesional de raya sazz 100 hojas', 30.0, 25.5)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="copia o impresión b/n" data-name="copia o impresión b/n">
+            <div class="card fade-in" data-brand="copia o impresión b/n" data-name="copia o impresión b/n" data-price="2.0" data-price-wholesale="1.7" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Copia o Impresión B/N', 2.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'Copia o Impresión B/N', 2.0, 1.7, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="Copia o Impresión B/N" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 4960 disp.</span>
@@ -1436,11 +1457,11 @@
                     <h3 class="product-title">Copia o Impresión B/N</h3>
                     <p class="price-text">$2.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('Copia o Impresión B/N', 2.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('Copia o Impresión B/N', 2.0, 1.7)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="copias e imprecio a color" data-name="copias e imprecio a color">
+            <div class="card fade-in" data-brand="copias e imprecio a color" data-name="copias e imprecio a color" data-price="4.0" data-price-wholesale="3.4" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'COPIAS E IMPRECIO A COLOR', 4.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'COPIAS E IMPRECIO A COLOR', 4.0, 3.4, 'PAPELERIA')">
                         
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="COPIAS E IMPRECIO A COLOR" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 500 disp.</span>
@@ -1450,11 +1471,11 @@
                     <h3 class="product-title">COPIAS E IMPRECIO A COLOR</h3>
                     <p class="price-text">$4.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('COPIAS E IMPRECIO A COLOR', 4.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('COPIAS E IMPRECIO A COLOR', 4.0, 3.4)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
-            <div class="card fade-in" data-brand="pegamento blanco escolar 60g" data-name="pegamento blanco escolar 60g">
+            <div class="card fade-in" data-brand="pegamento blanco escolar 60g" data-name="pegamento blanco escolar 60g" data-price="13.0" data-price-wholesale="11.05" style="display:flex;">
                 <div>
-                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'PEGAMENTO BLANCO ESCOLAR 60G', 13.0, 'PAPELERIA')">
+                    <div class="img-wrapper" onclick="openQuickView('https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80', 'PEGAMENTO BLANCO ESCOLAR 60G', 13.0, 11.05, 'PAPELERIA')">
                         <div class="promo-badge badge-vendido">MÁS VENDIDO</div>
                         <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80" alt="PEGAMENTO BLANCO ESCOLAR 60G" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80'">
                         <span class="stock-badge"><i class="fa-solid fa-box"></i> 5 disp.</span>
@@ -1464,7 +1485,7 @@
                     <h3 class="product-title">PEGAMENTO BLANCO ESCOLAR 60G</h3>
                     <p class="price-text">$13.00</p>
                 </div>
-                <button class="btn-buy" onclick="addToCart('PEGAMENTO BLANCO ESCOLAR 60G', 13.0)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                <button class="btn-buy" onclick="addToCart('PEGAMENTO BLANCO ESCOLAR 60G', 13.0, 11.05)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
             </div>
         </div>
 
@@ -1563,6 +1584,48 @@
     </footer>
 
     <script>
+        
+        // --- 0. LÓGICA DE MAYORISTAS ---
+        let isMayoreo = false;
+
+        const listaMayoristas = {
+            "RENE": "RENE2026",
+            "CARLOS": "CARLOS123",
+            "MARIA": "MARIA456"
+        };
+
+        function openMayoreoModal() { document.getElementById('mayoreoModal').classList.add('active'); }
+        function closeMayoreoModal(e) { if(e) e.stopPropagation(); document.getElementById('mayoreoModal').classList.remove('active'); }
+
+        function loginMayoreo() {
+            let user = document.getElementById('mayoreo-user').value.trim().toUpperCase();
+            let pwd = document.getElementById('mayoreo-pwd').value.trim();
+            
+            if(listaMayoristas[user] && listaMayoristas[user] === pwd) {
+                isMayoreo = true;
+                closeMayoreoModal();
+                enableMayoreoMode(user);
+                showToast(`✅ Bienvenido Mayorista: ${user}`);
+            } else {
+                alert("❌ Usuario o contraseña incorrectos. Verifica tus datos.");
+            }
+        }
+
+        function enableMayoreoMode(nombreUsuario) {
+            document.body.classList.add('mayoreo-active');
+            document.querySelector('.logo').innerHTML = `<img src="https://i.imgur.com/hpeiEdQ.png" alt="Logo"> PAPELERÍA JHERLY <span style="font-size:12px; background:var(--amarillo); color:black; padding:4px 8px; border-radius:10px; margin-left:10px; vertical-align:middle;">MAYOREO: ${nombreUsuario}</span>`;
+            
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                let pNormal = parseFloat(card.getAttribute('data-price')).toFixed(2);
+                let pMayoreo = parseFloat(card.getAttribute('data-price-wholesale')).toFixed(2);
+                card.querySelector('.price-text').innerHTML = `<span style="font-size:0.9rem; text-decoration:line-through; color:#94a3b8;">$${pNormal}</span> <span style="color:#d97706;">$${pMayoreo}</span>`;
+            });
+            
+            cart = [];
+            renderCart();
+        }
+
         // --- 1. LÓGICA DEL CARRUSEL ---
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.slide');
@@ -1655,13 +1718,21 @@
         }
 
         // --- 5. VISTA RÁPIDA ---
-        function openQuickView(imgSrc, title, price, dept) {
+        function openQuickView(imgSrc, title, price, wholesalePrice, dept) {
             document.getElementById('qv-img').src = imgSrc;
             document.getElementById('qv-title').innerText = title;
-            document.getElementById('qv-price').innerText = "$" + price.toFixed(2);
             document.getElementById('qv-dept').innerText = "Depto: " + dept;
+            
+            let activePrice = isMayoreo ? wholesalePrice : price;
+            
+            if(isMayoreo) {
+                document.getElementById('qv-price').innerHTML = `<span style="font-size:1.2rem; text-decoration:line-through; color:#94a3b8;">$${price.toFixed(2)}</span> <span style="color:#d97706;">$${activePrice.toFixed(2)}</span>`;
+            } else {
+                document.getElementById('qv-price').innerText = "$" + activePrice.toFixed(2);
+            }
+
             document.getElementById('qv-add-btn').onclick = function() {
-                addToCart(title, price);
+                addToCart(title, price, wholesalePrice);
                 closeQuickView();
             };
             document.getElementById('quickViewModal').classList.add('active');
@@ -1680,8 +1751,9 @@
         let cart = [];
         let cartItemsElement = document.getElementById('cart-items');
 
-        function addToCart(name, price) {
-            cart.push({name: name, price: price});
+        function addToCart(name, retailPrice, wholesalePrice) {
+            let activePrice = isMayoreo ? wholesalePrice : retailPrice;
+            cart.push({name: name, price: activePrice});
             renderCart();
             showToast(`¡Agregado al carrito: ${name}!`);
             let cartIcon = document.querySelector('nav');
@@ -1731,7 +1803,12 @@
 
         // EJECUTAR FILTROS AL INICIAR PARA ASEGURAR VISIBILIDAD
         document.addEventListener("DOMContentLoaded", () => {
-            applyFilters();
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.display = 'flex';
+                setTimeout(() => card.classList.add('visible'), 100);
+            });
+            document.getElementById('no-results').style.display = 'none';
         });
     </script>
 </body>
